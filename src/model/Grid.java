@@ -3,16 +3,43 @@ package model;
 public class Grid {
 
     private final Case matrix[][];
-    private int x;
-    private int y;
+    private int x;  // Largeur
+    private int y;  // Hauteur
 
     public Grid(int x, int y) {
-        this.matrix = new Case[x][y];
+        this.matrix = new Case[y][x];
         this.x = x;
         this.y = y;
     }
 
-    
+    public void applyGravity() {
+        for (int i = 0; i < this.x; i++) {
+            for (int j = this.y - 1; j > 0; j--) {
+                if (this.matrix[j][i].getType() == Type.EMPTY) {
+                    for (int k = j; k > 0; k--) {
+                        this.matrix[k][i].regenerate(this.matrix[k - 1][i]);
+                    }
+                    this.matrix[0][i].regenerate(new Case(Type.NORMAL));
+                }
+            }
+        }
+    }
+
+    public void initGrid() {
+        for (int j = 0; j < this.y; j++) {
+            for (int i = 0; i < this.x; i++) {
+                this.matrix[j][i] = new Case(Type.NORMAL);
+            }
+        }
+    }
+
+    public Case getCase(int x, int y) {
+        if (x < this.x && y < this.y) {
+            return matrix[y][x];
+        }
+        return null;
+    }
+
     public Case[][] getMatrix() {
         return matrix;
     }
@@ -24,49 +51,16 @@ public class Grid {
     public int getY() {
         return y;
     }
-    
-    public Case getCase(int i, int j){
-        if(i < x && j < y){
-            return matrix[i][j];
-        }
-        return null;
-    }
-    
-    public void applyGravity() {
-        for (int j = 0; j < this.y; j++) {
-            int i = this.x - 1;
-            while(this.matrix[i][j].getType() == Type.EMPTY){
-                
-                i--;
-            }
-        }
-    }
 
-    public void initGrid() {
-        for (int i = 0; i < this.x; i++) {
-            for (int j = 0; j < this.y; j++) {
-                int numRand = 0 + (int)(Math.random() * (((Shape.values().length-1) - 0) + 1));
-                this.matrix[i][j] = new Case(Shape.values()[numRand], Type.NORMAL);
-            }
-        }
-    }
-    
-    
     @Override
     public String toString() {
         String str = "";
-
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
-                if(this.matrix[i][j] == null){
-                    str += " -1 ";
-                }
-                else
-                    str += " " + i + j + " ";
+        for (int j = 0; j < this.y; j++) {
+            for (int i = 0; i < this.x; i++) {
+                str += this.matrix[j][i];
             }
             str += "\n";
         }
         return "Grid : \n" + str;
     }
-    
 }
