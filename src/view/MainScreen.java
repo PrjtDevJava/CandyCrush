@@ -20,6 +20,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import model.Grid;
 
 /**
  *
@@ -31,7 +32,7 @@ public class MainScreen extends JFrame{
     private final int GRID_SIZE = 520;
     private final String POLICE = new String("Thomas");
     
-    public MainScreen(){
+    public MainScreen(Grid grid){
         this.setTitle("Candy Crush 2.0");
         this.setSize(WIN_W, WIN_H);
         this.setLocationRelativeTo(null);
@@ -62,10 +63,23 @@ public class MainScreen extends JFrame{
         menuBar.add(menuHelp);
         this.setJMenuBar(menuBar);
         
-        
-        JPanel gridPane = new JPanel(new GridLayout(10, 10));
+        ////////////////////////////////////////////////////////////
+        ////                 Init Grille layout                 ////   
+        ////////////////////////////////////////////////////////////
+        JPanel gridPane = new JPanel(new GridLayout(grid.getX(), grid.getY()));
         gridPane.setBackground(Color.red);
         gridPane.setPreferredSize(new Dimension(GRID_SIZE, GRID_SIZE));
+        
+        for(int i=0; i < grid.getX(); i++){
+            for(int j=0; j < grid.getY(); j++){
+                CasePane cp = new CasePane();
+                grid.getCase(i, j).addObserver(cp);
+                cp.init(grid.getCase(i, j).getShape());
+                gridPane.add(cp);
+            }
+        }
+        
+        
         JPanel menuPane = new JPanel();
         menuPane.setBackground(Color.blue);
         menuPane.setPreferredSize(new Dimension(130, GRID_SIZE));
@@ -112,9 +126,6 @@ public class MainScreen extends JFrame{
         this.setVisible(true);
     }
 
-    private Font Font(String thomas, int i, int i0) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     
     
