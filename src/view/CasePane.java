@@ -13,8 +13,9 @@ public class CasePane extends JPanel implements Observer {
 
     public CasePane() {
     }
+
     public void init(Shape shape) {
-        this.addMouseListener(new MouseListener(){
+        this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent me) {
                 System.out.println("Click !!!");
