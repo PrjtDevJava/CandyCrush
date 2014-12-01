@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -63,6 +64,7 @@ public class MainScreen extends JFrame {
         for (int i = 0; i < grid.getX(); i++) {
             for (int j = 0; j < grid.getY(); j++) {
                 CasePane cp = new CasePane();
+                cp.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
                 grid.getCase(i, j).addObserver(cp);
                 cp.init(grid.getCase(i, j).getShape());
                 gridPane.add(cp);

@@ -3,8 +3,8 @@ package model;
 public class Grid {
 
     private final Case matrix[][];
-    private int x;  // Largeur
-    private int y;  // Hauteur
+    private final int x;  // Largeur
+    private final int y;  // Hauteur
 
     public Grid(int x, int y) {
         this.matrix = new Case[y][x];
@@ -30,6 +30,7 @@ public class Grid {
             for (int i = 0; i < this.x; i++) {
                 this.matrix[j][i] = new Case(Type.NORMAL);
             }
+        
         }
     }
 
