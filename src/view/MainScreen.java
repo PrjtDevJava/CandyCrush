@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JFrame;
@@ -17,14 +19,15 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import model.Grid;
 
-public class MainScreen extends JFrame {
+public class MainScreen extends JFrame{
 
     private final int WIN_W = 700;
     private final int WIN_H = 580;
     private final int GRID_SIZE = 520;
     private final String POLICE = "Thomas";
+    private JPanel gridPane;
 
-    public MainScreen(Grid grid) {
+    public MainScreen() {
         this.setTitle("Candy Crush 2.0");
         this.setSize(WIN_W, WIN_H);
         this.setLocationRelativeTo(null);
@@ -57,20 +60,11 @@ public class MainScreen extends JFrame {
         ////////////////////////////////////////////////////////////
         ////                 Init Grille layout                 ////   
         ////////////////////////////////////////////////////////////
-        JPanel gridPane = new JPanel(new GridLayout(grid.getX(), grid.getY()));
-        gridPane.setBackground(Color.red);
+        
+        gridPane = new JPanel();
+        gridPane.setBackground(Color.black);
         gridPane.setPreferredSize(new Dimension(GRID_SIZE, GRID_SIZE));
-
-        for (int i = 0; i < grid.getX(); i++) {
-            for (int j = 0; j < grid.getY(); j++) {
-                CasePane cp = new CasePane();
-                cp.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-                grid.getCase(i, j).addObserver(cp);
-                cp.init(grid.getCase(i, j).getShape());
-                gridPane.add(cp);
-            }
-        }
-
+        
         JPanel menuPane = new JPanel();
         menuPane.setBackground(Color.blue);
         menuPane.setPreferredSize(new Dimension(130, GRID_SIZE));
@@ -111,7 +105,21 @@ public class MainScreen extends JFrame {
                         .addComponent(menuPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 )
         );
-        this.setVisible(true);
+    }
+
+    
+    public void addGridListener(MouseListener ml, Grid grid){
+       this.gridPane.setLayout(new GridLayout(grid.getHeight(), grid.getWidth()));
+       for (int i = 0; i < grid.getHeight(); i++) {
+            for (int j = 0; j < grid.getWidth(); j++) {
+                CasePane cp = new CasePane();
+                cp.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+                grid.getCase(j, i).addObserver(cp);
+                cp.init(j, i, grid.getCase(j, i).getShape());
+                cp.addMouseListener(ml);
+                gridPane.add(cp);
+            }
+        }
     }
 
 }

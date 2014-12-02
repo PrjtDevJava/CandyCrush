@@ -2,7 +2,7 @@ package model;
 
 public class Grid {
 
-    private final Case matrix[][];
+    private Case matrix[][];
     private final int x;  // Largeur
     private final int y;  // Hauteur
 
@@ -19,7 +19,7 @@ public class Grid {
                     for (int k = j; k > 0; k--) {
                         this.matrix[k][i].regenerate(this.matrix[k - 1][i]);
                     }
-                    this.matrix[0][i].regenerate(new Case(Type.NORMAL));
+                    this.matrix[0][i].regenerate(new Case(i, j, Type.NORMAL, this));
                 }
             }
         }
@@ -28,7 +28,7 @@ public class Grid {
     public void initGrid() {
         for (int j = 0; j < this.y; j++) {
             for (int i = 0; i < this.x; i++) {
-                this.matrix[j][i] = new Case(Type.NORMAL);
+                this.matrix[j][i] = new Case(i, j, Type.NORMAL, this);
             }
         
         }
@@ -45,11 +45,11 @@ public class Grid {
         return matrix;
     }
 
-    public int getX() {
+    public int getWidth() {
         return x;
     }
 
-    public int getY() {
+    public int getHeight() {
         return y;
     }
 

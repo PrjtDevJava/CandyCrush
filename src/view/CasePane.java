@@ -10,36 +10,19 @@ import model.Case;
 import model.Shape;
 
 public class CasePane extends JPanel implements Observer {
-
+    public int x; // Public pas très sécurisé, mais plus simple
+    public int y;
     public CasePane() {
+        x = 0;
+        y = 0;
     }
 
-    public void init(Shape shape) {
-        this.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent me) {
-                System.out.println("Click !!!");
-                CasePane.this.setBackground(Color.black);
-            }
-
-            @Override
-            public void mousePressed(MouseEvent me) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent me) {
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent me) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent me) {
-            }
-        });
+    public void init(int x, int y, Shape shape) {
+        this.x = x;
+        this.y = y;
         this.setBackground(shape.getColor());
     }
+    
 
     @Override
     public void update(Observable obs, Object obj) {
