@@ -1,16 +1,15 @@
 package model;
 
-import java.awt.Color;
 import java.util.Objects;
 import java.util.Observable;
 
 public class Case extends Observable {
-
+    public static final int NB_CASE_POINT = 3; // Nombre de cases pour avoir au moins un point
     private Shape shape;
     private Type type;
-    private Grid grid;
-    private int x;
-    private int y;
+    private final Grid grid;
+    private final int x;
+    private final int y;
 
     public Case(int x, int y, Type type, Grid grid) {
         this.shape = Shape.values()[(int) (Math.random() * ((Shape.values().length - 1) + 1))];
@@ -29,6 +28,18 @@ public class Case extends Observable {
         notifyObservers();
     }
     
+    public void changeType(Type type){
+        this.type = type;
+        setChanged();
+        notifyObservers();
+    }
+    
+    public void changeShape(Shape shape){
+        this.shape = shape;
+        setChanged();
+        notifyObservers();
+    }
+    
     public int getX(){
         return this.x;
     }
@@ -36,29 +47,51 @@ public class Case extends Observable {
     public int getY(){
         return this.y;
     }
+    
+    public void setShape(Shape s){
+        this.shape = s;
+    }
+    
     /** Regarde si une agrégation est possible sur cette case (Si c'est possible, appel d'autres cases pour appliquer la gravité)
-     * @param shape : la formae par laquelle la case pourrait être remplacée si l'agrégation est possible
      * @return : le nombre de case à supprimer pour cette agrégation (Utile pour compter les points)
      */
-    public int aggregation(Shape shape){
-        int pointsXR = 0; // Points sur l'axe x droit
-        int pointsXL = 0; // Points sur l'axe x gauche
-        int pointsY = 0; // Points sur l'axe y
-        for(int curX=this.x+1; curX < grid.getWidth() && grid.getCase(curX, this.y).getShape() == shape; curX++){
-            if(curX-this.x >= 3){
-                pointsXR++;
+    @SuppressWarnings("empty-statement")
+    public int aggregation(){
+        int nbR; // Nombre de bonnes case à droite
+        int nbL; // Nombre de bonnes case à gauche
+        int nbT = 0; // Nombre de bonnes case en haut
+        int nbB = 0; // Nombre de bonnes case en bas
+        int points = 0;
+        
+        int i;
+        for(i=this.x+1; i < grid.getWidth() && grid.getCase(i, this.y).getShape() == this.shape; i++);
+        nbR = i - (this.x+1);
+        for(i=this.x-1; i >= 0 && grid.getCase(i, this.y).getShape() == this.shape; i--);
+        nbL = i*(-1) + (this.x-1);
+        for(i=this.y+1; i < grid.getHeight() && grid.getCase(this.x, i).getShape() == this.shape; i++);
+        nbB = i - (this.y+1);
+        for(i=this.y-1; i >= 0 && grid.getCase(this.x, i).getShape() == this.shape; i--);
+        nbT = i*(-1) + (this.y-1);
+        System.out.println("Droit : " + nbR + " Gauche : " + nbL);
+        System.out.println("Bas : " + nbB + " Haut : " + nbT);
+        
+        System.out.println("Px : " + (nbR + nbL) + " Py : " + (nbT + nbB));
+        
+        if((nbR + nbL + 1) >= NB_CASE_POINT){ // +1 Pour compter la case actuelle
+            for(int j=this.x-nbL; j < (this.x+nbR+1); j++){
+                grid.getCase(j, this.y).changeType(Type.EMPTY);
             }
+            points += (nbR + nbL + 1);
         }
-        for(int curX=this.x-1; curX > 0 && grid.getCase(curX, this.y).getShape() == shape; curX++){
-            if(curX-this.x >= 3){
-                pointsXL++;
+        if((nbT + nbB + 1) >= NB_CASE_POINT){
+            for(int j=this.y-nbT; j < (this.y+nbB+1); j++){
+                grid.getCase(this.x, j).changeType(Type.EMPTY);
             }
+            points += (nbR + nbL + 1);
         }
         
         
-        
-        
-        return 0;
+        return points;
     } 
 
     public Type getType() {

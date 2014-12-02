@@ -12,6 +12,7 @@ import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 import model.Case;
 import model.Grid;
+import model.Shape;
 import view.CasePane;
 
 /**
@@ -21,33 +22,52 @@ import view.CasePane;
 public class GridController implements MouseListener{
     private Grid grid;
     private CasePane caseSelected;
+    private int points; // *** Temporaire
+    
     
     GridController(Grid grid){
         this.grid = grid;
         this.caseSelected = null;
+        this.points = 0;
     }
     
     @Override
     // préférable que MouseClicked, car le relachement n'est pas obligatoirement sur la même case
     public void mouseReleased(MouseEvent ev) {
-        CasePane pane = (CasePane)ev.getSource();
-        
-        if(caseSelected == null){
-            caseSelected = pane;
-            pane.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 2));
-        }
-        // Si il y seulement un carreau d'écart (haut, bas, doite, gauche mais pas diagonale)
-        else if((caseSelected.x - pane.x) <= 1 && (caseSelected.x - pane.x) >= -1 && (caseSelected.y - pane.y) == 0 ||  
-                (caseSelected.y - pane.y) <= 1 && (caseSelected.y - pane.y) >= -1 && (caseSelected.x - pane.x) == 0){
-            pane.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 2));
-            Case c1 = grid.getCase(caseSelected.x, caseSelected.y);
-            Case c2 = grid.getCase(pane.x, pane.y);
-            c1.aggregation(c2.getShape()); // On regarde s'il y a une aggrégation quand on inverse les cases
-            System.out.println("Color : " + c2.getShape());
-            //c2.aggregation(c1.getShape());
-            System.out.println("casePane : x:" + caseSelected.x + " y:" + caseSelected.y);
-            System.out.println("case : x:" + c1.getX() + " y:" + c1.getY());
-            caseSelected = null;
+        if(ev.getSource() != this.caseSelected){
+            CasePane pane = (CasePane)ev.getSource();
+            if(caseSelected == null){
+                caseSelected = pane;
+                pane.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 2));
+            }
+            // Si il y seulement un carreau d'écart (haut, bas, doite, gauche mais pas diagonale)
+            else if(pane != this.caseSelected &&
+                    (caseSelected.x - pane.x) <= 1 && (caseSelected.x - pane.x) >= -1 && (caseSelected.y - pane.y) == 0 ||  
+                    (caseSelected.y - pane.y) <= 1 && (caseSelected.y - pane.y) >= -1 && (caseSelected.x - pane.x) == 0){
+                pane.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 2));
+                Case c1 = grid.getCase(caseSelected.x, caseSelected.y);
+                Case c2 = grid.getCase(pane.x, pane.y);
+                Shape tmpShape = c1.getShape();
+                c1.setShape(c2.getShape());
+                c2.setShape(tmpShape);
+                int pointsAdd = c1.aggregation();
+                pointsAdd +=  c2.aggregation(); // On regarde s'il y a une aggrégation quand on inverse les cases
+               if(pointsAdd > 0){
+                   points += pointsAdd;
+                   c1.changeShape(c1.getShape());
+                   c2.changeShape(c2.getShape());
+               }
+               else{
+                   c2.setShape(c1.getShape());
+                   c1.setShape(tmpShape);
+               }
+                
+                
+                System.out.println("Color : " + c2.getShape());
+//                System.out.println("casePane : x:" + caseSelected.x + " y:" + caseSelected.y);
+//                System.out.println("case : x:" + c1.getX() + " y:" + c1.getY());
+                caseSelected = null;
+            }
         }
         
         

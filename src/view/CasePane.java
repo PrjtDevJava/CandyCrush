@@ -8,6 +8,7 @@ import java.util.Observer;
 import javax.swing.JPanel;
 import model.Case;
 import model.Shape;
+import model.Type;
 
 public class CasePane extends JPanel implements Observer {
     public int x; // Public pas très sécurisé, mais plus simple
@@ -28,7 +29,12 @@ public class CasePane extends JPanel implements Observer {
     public void update(Observable obs, Object obj) {
         if (obs instanceof Case) {
             Case c = (Case) obs;
-            this.setBackground(c.getShape().getColor());
+            if(c.getType() != Type.EMPTY){
+                this.setBackground(c.getShape().getColor());
+            }
+            else{
+                this.setBackground(Color.BLACK);
+            }
         }
     }
 
