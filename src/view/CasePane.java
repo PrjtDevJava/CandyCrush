@@ -29,7 +29,7 @@ public class CasePane extends JPanel implements Observer {
     public void update(Observable obs, Object obj) {
         if (obs instanceof Case) {
             Case c = (Case) obs;
-            if(c.getType() != Type.EMPTY){
+            if(c.getType() != Type.EMPTY && c.getShape() != null){
                 this.setBackground(c.getShape().getColor());
             }
             else{

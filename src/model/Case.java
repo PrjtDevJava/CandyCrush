@@ -19,7 +19,21 @@ public class Case extends Observable {
         this.y = y;
     }
 
-
+    /**
+     * Génère une case avec une forme aléatoire
+     * @param type : Le type que l'on veut donner à la case
+     */
+    public void regenerate(Type type){
+        this.shape = Shape.values()[(int) (Math.random() * ((Shape.values().length - 1) + 1))];
+        this.type = type;
+        setChanged(); 
+        notifyObservers(); // si un observer n'a pas perçus de changement depuis son dernier appel, il ne fait rien
+    }
+    
+    /**
+     * Régénère une case à partire des caractèristiques d'une autre
+     * @param c : La case sur la quelle on se base pour la génération
+     */
     public void regenerate(Case c) {
         this.shape = c.getShape();
         this.type = c.getType();
@@ -48,6 +62,10 @@ public class Case extends Observable {
         return this.y;
     }
     
+    public Grid getGrid(){
+        return this.grid;
+    }
+    
     public void setShape(Shape s){
         this.shape = s;
     }
@@ -59,8 +77,8 @@ public class Case extends Observable {
     public int aggregation(){
         int nbR; // Nombre de bonnes case à droite
         int nbL; // Nombre de bonnes case à gauche
-        int nbT = 0; // Nombre de bonnes case en haut
-        int nbB = 0; // Nombre de bonnes case en bas
+        int nbT; // Nombre de bonnes case en haut
+        int nbB; // Nombre de bonnes case en bas
         int points = 0;
         
         int i;
@@ -80,14 +98,30 @@ public class Case extends Observable {
         if((nbR + nbL + 1) >= NB_CASE_POINT){ // +1 Pour compter la case actuelle
             for(int j=this.x-nbL; j < (this.x+nbR+1); j++){
                 grid.getCase(j, this.y).changeType(Type.EMPTY);
+                grid.getCase(j, this.y).setShape(null);
             }
-            points += (nbR + nbL + 1);
+            points += (nbR + nbL);
+        }
+        else{
+            nbR=0;
+            nbL=0;
         }
         if((nbT + nbB + 1) >= NB_CASE_POINT){
             for(int j=this.y-nbT; j < (this.y+nbB+1); j++){
+                grid.getCase(this.x, j).setShape(null);
                 grid.getCase(this.x, j).changeType(Type.EMPTY);
             }
-            points += (nbR + nbL + 1);
+            points += (nbT + nbB);
+        }
+        
+        // Enlever cela quand les semaphores fonctionnerons ----------------------------------------------------------------------------------
+        if(points > 0){
+            new UpdateGravity(this).start();
+            for(int j=this.x-nbL; j < (this.x+nbR+1); j++){
+                if(j != this.x){
+                    new UpdateGravity(grid.getCase(j, this.y)).start();
+                }
+            }
         }
         
         

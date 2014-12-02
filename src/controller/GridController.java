@@ -44,7 +44,6 @@ public class GridController implements MouseListener{
             else if(pane != this.caseSelected &&
                     (caseSelected.x - pane.x) <= 1 && (caseSelected.x - pane.x) >= -1 && (caseSelected.y - pane.y) == 0 ||  
                     (caseSelected.y - pane.y) <= 1 && (caseSelected.y - pane.y) >= -1 && (caseSelected.x - pane.x) == 0){
-                pane.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 2));
                 Case c1 = grid.getCase(caseSelected.x, caseSelected.y);
                 Case c2 = grid.getCase(pane.x, pane.y);
                 Shape tmpShape = c1.getShape();
@@ -61,13 +60,17 @@ public class GridController implements MouseListener{
                    c2.setShape(c1.getShape());
                    c1.setShape(tmpShape);
                }
-                
-                
-                System.out.println("Color : " + c2.getShape());
-//                System.out.println("casePane : x:" + caseSelected.x + " y:" + caseSelected.y);
-//                System.out.println("case : x:" + c1.getX() + " y:" + c1.getY());
+                this.caseSelected.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
                 caseSelected = null;
             }
+            else{
+                this.caseSelected.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+                caseSelected = null;
+            }
+        }
+        else{
+            this.caseSelected.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+            caseSelected = null;
         }
         
         
