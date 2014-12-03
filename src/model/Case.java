@@ -91,36 +91,14 @@ public class Case extends Observable {
 
     @Override
     public String toString() {
+        if(this == null || this.shape == null){
+            return "null";
+        }
         if (this.type == Type.EMPTY) {
             return "-1 ";
         }
         return this.type.ordinal() + "" + this.shape.ordinal() + " ";
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + Objects.hashCode(this.shape);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Case other = (Case) obj;
-        if (this.shape != other.shape) {
-            return false;
-        }
-        return true;
-    }
-
-    
-   
     
     
 

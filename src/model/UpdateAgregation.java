@@ -5,11 +5,13 @@
  */
 package model;
 
-import java.util.concurrent.locks.Condition;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import static model.Case.NB_CASE_POINT;
 
 /**
@@ -19,6 +21,7 @@ import static model.Case.NB_CASE_POINT;
 public class UpdateAgregation extends java.lang.Thread {
     public static int nbThread = 0;
     public static Lock mut = new ReentrantLock();
+    private static Set<Case> setCaseToUpdGrav = Collections.synchronizedSet(new HashSet());
     
     private Case c;
     
@@ -26,21 +29,39 @@ public class UpdateAgregation extends java.lang.Thread {
         this.c = c;
     }
     
+    public static synchronized void incrementThread(){
+        nbThread++;
+    }
+    
+    public static synchronized void decrementThread(){
+        nbThread--;
+        if(nbThread == 0){
+            System.out.println("Send--------------");
+            for (Case curCase : setCaseToUpdGrav) {
+                new UpdateGravity(curCase).start();
+            }
+            setCaseToUpdGrav.clear();
+        }
+    }
+    
     @Override
     @SuppressWarnings("empty-statement")
     public void run(){
-        mut.lock();
-        try {
-            nbThread++;
-        } finally {
-            mut.unlock();
-        }
+//        mut.lock();
+//        try {
+//            nbThread++;
+//            System.out.println("Thread : " + Thread.currentThread().getId() + "  -> nb : " + nbThread);
+//        } finally {
+//            mut.unlock();
+//        }
         
         
-        if(c.getType() != Type.EMPTY){
+        if(c != null && c.getShape() != null && c.getType() != Type.EMPTY){
+            incrementThread();
+            System.out.println("Thread : " + Thread.currentThread().getId() + "  -> nb : " + nbThread);
             synchronized(c.getGrid()){
             Grid grid = c.getGrid();
-            System.out.println("Thread UpdateAgregation -> nbThread : " + nbThread);
+            //System.out.println("Thread UpdateAgregation -> nbThread : " + nbThread);
 
             int nbR; // Nombre de bonnes case à droite
             int nbL; // Nombre de bonnes case à gauche
@@ -57,10 +78,9 @@ public class UpdateAgregation extends java.lang.Thread {
             nbB = i - (c.getY()+1);
             for(i=c.getY()-1; i >= 0 && grid.getCase(c.getX(), i).getShape() == c.getShape(); i--);
             nbT = i*(-1) + (c.getY()-1);
-            System.out.println("Droit : " + nbR + " Gauche : " + nbL);
-            System.out.println("Bas : " + nbB + " Haut : " + nbT);
+//            System.out.println("Droit : " + nbR + " Gauche : " + nbL);
+//            System.out.println("Bas : " + nbB + " Haut : " + nbT);
 
-            System.out.println("Px : " + (nbR + nbL) + " Py : " + (nbT + nbB));
 
             if((nbR + nbL + 1) >= NB_CASE_POINT){ // +1 Pour compter la case actuelle
                 for(int j=c.getX()-nbL; j < (c.getX()+nbR+1); j++){
@@ -83,40 +103,24 @@ public class UpdateAgregation extends java.lang.Thread {
                 points += (nbT + nbB);
             }
             
-        mut.lock();
-        nbThread--;
-        if(nbThread == 0){
-            notifyAll();
-            mut.unlock();
-        }
-        else{
-            mut.unlock();
-            try {
-                wait();
-                System.out.println("Salut : " + Thread.currentThread());
-            } catch (InterruptedException ex) {
-                Logger.getLogger(UpdateAgregation.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        
-//        if(points > 0){
+            
+            
+        if(points > 0){
+            setCaseToUpdGrav.add(c);
+            
 //            new UpdateGravity(c).start();
-//            for(int j=c.getX()-nbL; j < (c.getX()+nbR+1); j++){
-//                if(j != c.getX()){
-//                    new UpdateGravity(grid.getCase(j, c.getY())).start();
-//                }
-//            }
-//        }
-        
-//                if(points > 0){
-//                    new UpdateGravity(c).start();
-//                    for(int j=c.getX()-nbL; j < (c.getX()+nbR+1); j++){
-//                        if(j != c.getX()){
-//                            new UpdateGravity(grid.getCase(j, c.getY())).start();
-//                        }
-//                    }
-//                }
+            for(int j=c.getX()-nbL; j < (c.getX()+nbR+1); j++){
+                if(j != c.getX()){
+                    setCaseToUpdGrav.add(grid.getCase(j, c.getY()));
+                }
             }
+            System.out.println("Taille L : " + setCaseToUpdGrav.size());
         }
+        }
+        decrementThread();
+        System.out.println("Dell Thread : " + Thread.currentThread().getId() + "  -> nb : " + nbThread);
+        }
+        
+        
     }
 }

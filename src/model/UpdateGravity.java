@@ -5,12 +5,13 @@
  */
 package model;
 
-import java.util.concurrent.locks.Condition;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static model.Case.NB_CASE_POINT;
 
 
 /**
@@ -20,7 +21,7 @@ import static model.Case.NB_CASE_POINT;
 public class UpdateGravity extends java.lang.Thread {
     public static int nbThread = 0;
     public static Lock mut = new ReentrantLock();
-    public static Integer level = 0;
+    private static Set<Case> setCaseToUpdAgreg = Collections.synchronizedSet(new HashSet());
     private final Case c;
     
     
@@ -44,14 +45,19 @@ public class UpdateGravity extends java.lang.Thread {
 //        }
 
        
-        
+       
         
         if(c.getType() == Type.EMPTY){
             synchronized(c.getGrid()){ // Pas très optimisé, on pourrait faire la synchronisation par colonne
                 Grid grid = c.getGrid();
                 int numStartC; // La case de départ (dès qu'on trouve un case non vide en dessous de la case c)
                 for(numStartC=c.getY(); numStartC < grid.getHeight() && grid.getCase(c.getX(), numStartC).getType() == Type.EMPTY; numStartC++);
-                numStartC--; // On se positionne sur la dernière case vide
+                if(numStartC != 0){
+                    numStartC--; // On se positionne sur la dernière case vide
+                }
+                for(int i=numStartC; i >= 0; i--){ // Ajoute les cases sur lesquelles il faudra vérifier les agrégations
+                    setCaseToUpdAgreg.add(grid.getCase(c.getX(), i));
+                }
                 System.out.println("Thread UpdateGravite -> nbThread : " + nbThread);
                 //System.out.println("Thread : " + Thread.currentThread() + "  Start c :" + numStartC);
                 Case startC = grid.getCase(c.getX(), numStartC);
@@ -72,6 +78,28 @@ public class UpdateGravity extends java.lang.Thread {
                 }
             }
         }
+        
+        
+        mut.lock();
+        nbThread--;
+        if(nbThread == 0){
+            System.out.println("Mise à jour Grav: " + setCaseToUpdAgreg);
+            for (Case curCase : setCaseToUpdAgreg) {
+//                try {
+//                    Thread.sleep(10);
+//                } catch (InterruptedException ex) {
+//                    Logger.getLogger(UpdateGravity.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+                new UpdateAgregation(curCase).start();
+            }
+            setCaseToUpdAgreg.clear();
+            mut.unlock();
+        }
+        else{
+            mut.unlock();
+        }
+        
+        
 //        mut.lock();
 //        nbThread--;
 //        if(nbThread == 0){
