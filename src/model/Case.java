@@ -75,57 +75,10 @@ public class Case extends Observable {
      */
     @SuppressWarnings("empty-statement")
     public int aggregation(){
-        int nbR; // Nombre de bonnes case à droite
-        int nbL; // Nombre de bonnes case à gauche
-        int nbT; // Nombre de bonnes case en haut
-        int nbB; // Nombre de bonnes case en bas
-        int points = 0;
-        
-        int i;
-        for(i=this.x+1; i < grid.getWidth() && grid.getCase(i, this.y).getShape() == this.shape; i++);
-        nbR = i - (this.x+1);
-        for(i=this.x-1; i >= 0 && grid.getCase(i, this.y).getShape() == this.shape; i--);
-        nbL = i*(-1) + (this.x-1);
-        for(i=this.y+1; i < grid.getHeight() && grid.getCase(this.x, i).getShape() == this.shape; i++);
-        nbB = i - (this.y+1);
-        for(i=this.y-1; i >= 0 && grid.getCase(this.x, i).getShape() == this.shape; i--);
-        nbT = i*(-1) + (this.y-1);
-        System.out.println("Droit : " + nbR + " Gauche : " + nbL);
-        System.out.println("Bas : " + nbB + " Haut : " + nbT);
-        
-        System.out.println("Px : " + (nbR + nbL) + " Py : " + (nbT + nbB));
-        
-        if((nbR + nbL + 1) >= NB_CASE_POINT){ // +1 Pour compter la case actuelle
-            for(int j=this.x-nbL; j < (this.x+nbR+1); j++){
-                grid.getCase(j, this.y).changeType(Type.EMPTY);
-                grid.getCase(j, this.y).setShape(null);
-            }
-            points += (nbR + nbL);
+        if(this.type != Type.EMPTY){
+            new UpdateAgregation(this).start();
         }
-        else{
-            nbR=0;
-            nbL=0;
-        }
-        if((nbT + nbB + 1) >= NB_CASE_POINT){
-            for(int j=this.y-nbT; j < (this.y+nbB+1); j++){
-                grid.getCase(this.x, j).setShape(null);
-                grid.getCase(this.x, j).changeType(Type.EMPTY);
-            }
-            points += (nbT + nbB);
-        }
-        
-        // Enlever cela quand les semaphores fonctionnerons ----------------------------------------------------------------------------------
-        if(points > 0){
-            new UpdateGravity(this).start();
-            for(int j=this.x-nbL; j < (this.x+nbR+1); j++){
-                if(j != this.x){
-                    new UpdateGravity(grid.getCase(j, this.y)).start();
-                }
-            }
-        }
-        
-        
-        return points;
+        return 1;
     } 
 
     public Type getType() {
