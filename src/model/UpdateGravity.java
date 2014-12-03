@@ -5,13 +5,23 @@
  */
 package model;
 
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  *
  * @author Sylvio
  */
-public class UpdateGravity extends java.lang.Thread{
-    private Case c;
+public class UpdateGravity extends java.lang.Thread {
+    public static int nbThread = 0;
+    public static Lock mut = new ReentrantLock();
+    public static Condition cond = UpdateGravity.mut.newCondition();
+    private final Case c;
+    
     
     public UpdateGravity(Case c){
         this.c = c;
@@ -20,8 +30,32 @@ public class UpdateGravity extends java.lang.Thread{
     @Override
     @SuppressWarnings("empty-statement")
     public void run(){
-        synchronized(c.getGrid()){ // Pas très optimisé, on pourrait faire la synchronisation par colonne
-            if(c.getType() == Type.EMPTY){
+        mut.lock();
+        if(UpdateAgregation.nbThread != 0){
+            try {
+                mut.unlock();
+                UpdateGravity.cond.await(); // On attend que toutes les aggrégations soient faites
+                mut.lock();
+                try {
+                    nbThread++;
+                } finally {
+                    mut.unlock();
+                }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(UpdateGravity.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            mut.unlock();
+        }
+        
+//        try {
+//            Thread.sleep(4000);
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(UpdateGravity.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        if(c.getType() == Type.EMPTY){
+            synchronized(c.getGrid()){ // Pas très optimisé, on pourrait faire la synchronisation par colonne
                 Grid grid = c.getGrid();
                 int numStartC; // La case de départ (dès qu'on trouve un case non vide en dessous de la case c)
                 for(numStartC=c.getY(); numStartC < grid.getHeight() && grid.getCase(c.getX(), numStartC).getType() == Type.EMPTY; numStartC++);
@@ -45,8 +79,19 @@ public class UpdateGravity extends java.lang.Thread{
                     grid.getCase(c.getX(), i).regenerate(Type.NORMAL);
                 }
             }
-            System.out.println("Nb thread : " + Thread.activeCount());
         }
+        mut.lock(); 
+        nbThread--;
+        if(nbThread == 0){
+            UpdateAgregation.cond.signal(); // On attend que toutes les aggrégations soient faites
+        }
+        mut.unlock();
+
+        
+        
+         //section critique
+        System.out.println("Nb thread : " + Thread.activeCount());
+        
         
     }
     
