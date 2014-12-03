@@ -1,6 +1,7 @@
 package controller;
 
 import model.Grid;
+import model.PointsCounter;
 import view.MainScreen;
 
 public class MainController {
@@ -10,7 +11,9 @@ public class MainController {
         MainScreen MScreen = new MainScreen();
         g.initGrid();
         MScreen.addGridListener(new GridController(g), g);
+        PointsController pc = new PointsController(MScreen.getLabPoints());
         MScreen.setVisible(true);
+        
     }
 
 }

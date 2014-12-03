@@ -25,6 +25,7 @@ public class MainScreen extends JFrame{
     private final int GRID_SIZE = 520;
     private final String POLICE = "Thomas";
     private JPanel gridPane;
+    private JLabel labPoints;
 
     public MainScreen() {
         this.setTitle("Candy Crush 2.0");
@@ -70,7 +71,7 @@ public class MainScreen extends JFrame{
 
         JLabel labTime = new JLabel("2:30");
         labTime.setFont(new Font(POLICE, 0, 18));
-        JLabel labPoints = new JLabel("51");
+        labPoints = new JLabel();
         labPoints.setFont(new Font(POLICE, 0, 18));
 
         GroupLayout menuGrLayout = new GroupLayout(menuPane);
@@ -119,6 +120,10 @@ public class MainScreen extends JFrame{
                 gridPane.add(cp);
             }
         }
+    }
+    
+    public JLabel getLabPoints(){
+        return this.labPoints;
     }
 
 }

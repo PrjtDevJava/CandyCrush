@@ -82,7 +82,7 @@ public class GridController implements MouseListener{
 
     @Override
     public void mousePressed(MouseEvent ev) {
-        
+        System.out.println("Pressed");
     }
 
 
@@ -93,6 +93,7 @@ public class GridController implements MouseListener{
 
     @Override
     public void mouseExited(MouseEvent me) {
+        System.out.println("Exited");
     }
     
 }

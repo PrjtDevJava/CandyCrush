@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Objects;
 import java.util.Observable;
 
 public class Case extends Observable {

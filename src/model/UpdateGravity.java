@@ -29,25 +29,33 @@ public class UpdateGravity extends java.lang.Thread {
         this.c = c;
     }
     
+    public static synchronized void incrementThread(){
+        nbThread++;
+    }
+    
+     public static synchronized void decrementThread(){
+        nbThread--;
+        if(nbThread == 0){
+            System.out.println("Mise à jour Grav: " + setCaseToUpdAgreg);
+            for (Case curCase : setCaseToUpdAgreg) {
+//                try {
+//                    Thread.sleep(10);
+//                } catch (InterruptedException ex) {
+//                    Logger.getLogger(UpdateGravity.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+                new UpdateAgregation(curCase).start();
+            }
+            setCaseToUpdAgreg.clear();
+        }
+    }
+    
     @Override
     @SuppressWarnings("empty-statement")
     public void run(){
-        mut.lock();
-        try {
-            nbThread++;
-        } finally {
-            mut.unlock();
-        }
-//        try {
-//            Thread.sleep(4000);
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(UpdateGravity.class.getName()).log(Level.SEVERE, null, ex);
-//        }
 
-       
-       
-        
+
         if(c.getType() == Type.EMPTY){
+            incrementThread();
             synchronized(c.getGrid()){ // Pas très optimisé, on pourrait faire la synchronisation par colonne
                 Grid grid = c.getGrid();
                 int numStartC; // La case de départ (dès qu'on trouve un case non vide en dessous de la case c)
@@ -77,39 +85,10 @@ public class UpdateGravity extends java.lang.Thread {
                     grid.getCase(c.getX(), i).regenerate(Type.NORMAL);
                 }
             }
+            decrementThread();
         }
         
         
-        mut.lock();
-        nbThread--;
-        if(nbThread == 0){
-            System.out.println("Mise à jour Grav: " + setCaseToUpdAgreg);
-            for (Case curCase : setCaseToUpdAgreg) {
-//                try {
-//                    Thread.sleep(10);
-//                } catch (InterruptedException ex) {
-//                    Logger.getLogger(UpdateGravity.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-                new UpdateAgregation(curCase).start();
-            }
-            setCaseToUpdAgreg.clear();
-            mut.unlock();
-        }
-        else{
-            mut.unlock();
-        }
-        
-        
-//        mut.lock();
-//        nbThread--;
-//        if(nbThread == 0){
-//            UpdateAgregation.cond.signal(); // On attend que toutes les aggrégations soient faites
-//        }
-//        mut.unlock();
-
-        
-        
-         //section critique
         System.out.println("Nb thread : " + Thread.activeCount());
         
         

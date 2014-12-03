@@ -20,8 +20,8 @@ import static model.Case.NB_CASE_POINT;
  */
 public class UpdateAgregation extends java.lang.Thread {
     public static int nbThread = 0;
-    public static Lock mut = new ReentrantLock();
     private static Set<Case> setCaseToUpdGrav = Collections.synchronizedSet(new HashSet());
+    private static PointsCounter pc = null;
     
     private Case c;
     
@@ -29,11 +29,11 @@ public class UpdateAgregation extends java.lang.Thread {
         this.c = c;
     }
     
-    public static synchronized void incrementThread(){
+    private static synchronized void incrementThread(){
         nbThread++;
     }
     
-    public static synchronized void decrementThread(){
+    private static synchronized void decrementThread(){
         nbThread--;
         if(nbThread == 0){
             System.out.println("Send--------------");
@@ -44,17 +44,17 @@ public class UpdateAgregation extends java.lang.Thread {
         }
     }
     
+    public static synchronized void setPointsCounter(PointsCounter pc){
+        UpdateAgregation.pc = pc;
+    }
+    
+    public static synchronized void addPoints(int points){
+        UpdateAgregation.pc.addPoints(points);
+    }
+    
     @Override
     @SuppressWarnings("empty-statement")
     public void run(){
-//        mut.lock();
-//        try {
-//            nbThread++;
-//            System.out.println("Thread : " + Thread.currentThread().getId() + "  -> nb : " + nbThread);
-//        } finally {
-//            mut.unlock();
-//        }
-        
         
         if(c != null && c.getShape() != null && c.getType() != Type.EMPTY){
             incrementThread();
@@ -87,7 +87,7 @@ public class UpdateAgregation extends java.lang.Thread {
                     grid.getCase(j, c.getY()).changeType(Type.EMPTY);
                     grid.getCase(j, c.getY()).setShape(null);
                 }
-                points += (nbR + nbL);
+                points += (nbR + nbL) - 1;
             }
             else{
                 nbR=0;
@@ -100,15 +100,14 @@ public class UpdateAgregation extends java.lang.Thread {
                     grid.getCase(c.getX(), j).setShape(null);
                     grid.getCase(c.getX(), j).changeType(Type.EMPTY);
                 }
-                points += (nbT + nbB);
+                points += (nbT + nbB) - 1;
             }
             
             
             
         if(points > 0){
+            UpdateAgregation.addPoints(points);
             setCaseToUpdGrav.add(c);
-            
-//            new UpdateGravity(c).start();
             for(int j=c.getX()-nbL; j < (c.getX()+nbR+1); j++){
                 if(j != c.getX()){
                     setCaseToUpdGrav.add(grid.getCase(j, c.getY()));
