@@ -22,7 +22,7 @@ public class MainScreen extends JFrame{
 
     private final int WIN_W = 700;
     private final int WIN_H = 580;
-    private final int GRID_SIZE = 520;
+    private final int GRID_SIZE = 480;
     private final String POLICE = "Thomas";
     private JPanel gridPane;
     private JLabel labPoints;
@@ -66,8 +66,9 @@ public class MainScreen extends JFrame{
         gridPane.setPreferredSize(new Dimension(GRID_SIZE, GRID_SIZE));
         
         JPanel menuPane = new JPanel();
-        menuPane.setBackground(Color.blue);
         menuPane.setPreferredSize(new Dimension(130, GRID_SIZE));
+        menuPane.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        menuPane.setBackground(Color.blue);
 
         JLabel labTime = new JLabel("2:30");
         labTime.setFont(new Font(POLICE, 0, 18));
@@ -113,7 +114,6 @@ public class MainScreen extends JFrame{
        for (int i = 0; i < grid.getHeight(); i++) {
             for (int j = 0; j < grid.getWidth(); j++) {
                 CasePane cp = new CasePane();
-                cp.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
                 grid.getCase(j, i).addObserver(cp);
                 cp.init(j, i, grid.getCase(j, i).getShape());
                 cp.addMouseListener(ml);
