@@ -7,9 +7,10 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseListener;
-import javax.swing.BorderFactory;
+import java.io.IOException;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -21,14 +22,14 @@ import model.Grid;
 
 public class MainScreen extends JFrame{
 
-    private final int WIN_W = 650;
+    private final int WIN_W = 670;
     private final int WIN_H = 550;
     private final int GRID_SIZE = 488;
     private final String POLICE = "Thomas";
     private final JPanel gridPane;
     private final JLabel labPoints;
 
-    public MainScreen() {
+    public MainScreen() throws IOException {
         this.setTitle("Candy Crush 2.0");
         this.setSize(WIN_W, WIN_H);
         this.setLocationRelativeTo(null);
@@ -67,25 +68,35 @@ public class MainScreen extends JFrame{
         gridPane.setBackground(Color.black);
         
         JPanel menuPane = new JPanel();
-        menuPane.setPreferredSize(new Dimension(130, GRID_SIZE));
-        menuPane.setBackground(new Color(222, 217, 185));
-        menuPane.setBorder(BorderFactory.createLineBorder(new Color(211, 204, 160), 1));
+        menuPane.setPreferredSize(new Dimension(150, GRID_SIZE));
+//        menuPane.setBackground(new Color(222, 217, 185));
+//        menuPane.setBorder(BorderFactory.createLineBorder(new Color(211, 204, 160), 1));
 
         
         
         JLabel labTime = new JLabel("2:30");
         labTime.setFont(new Font(POLICE, 0, 18));
+        
+        // Timer
+        JPanel jpTimer = new JPanel();
+        jpTimer.setLayout(new BoxLayout(jpTimer, BoxLayout.Y_AXIS));
+        TimeCounter tc = new TimeCounter(99);
+        jpTimer.add(new JLabel("Temps restant :"));
+        jpTimer.add(tc);
+        // Scores
+        JPanel jpScore = new JPanel();
+        jpScore.setLayout(new BoxLayout(jpScore, BoxLayout.Y_AXIS));
         labPoints = new JLabel();
         labPoints.setFont(new Font(POLICE, 0, 18));
-        TimeCounter tc = new TimeCounter(99);
-        JPanel jp = new JPanel();
-        jp.setBackground(Color.yellow);
-        jp.setLayout(new BoxLayout(jp, BoxLayout.LINE_AXIS));
-        jp.add(labPoints);
-
+        jpScore.add(new JLabel("Score :"));
+        jpScore.add(labPoints);
+        // Logo
+        JLabel logo = new JLabel(new ImageIcon("./src/images/logopetit.png")); 
+        
         menuPane.setLayout(new BoxLayout(menuPane, BoxLayout.PAGE_AXIS));
-        menuPane.add(tc);
-        menuPane.add(jp);
+        menuPane.add(jpTimer);
+        menuPane.add(jpScore);
+        menuPane.add(logo);
        
 //        GroupLayout menuGrLayout = new GroupLayout(menuPane);
 //        menuGrLayout.setHorizontalGroup(
