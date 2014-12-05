@@ -45,11 +45,9 @@ public class GridController implements MouseListener{
                 Case c1 = grid.getCase(caseSelected.x, caseSelected.y);
                 Case c2 = grid.getCase(pane.x, pane.y);
                 
-//                int pointsAdd = c1.aggregation();
-//                pointsAdd +=  c2.aggregation(); // On regarde s'il y a une aggrégation quand on inverse les cases
                
                 UpdateAgregation updtAgreg = new UpdateAgregation(c1);
-                updtAgreg.playCases(c2); // Test les 2 case utilisateur
+                updtAgreg.playCases(c2); // Test les 2 cases choisies par l'utilisateur
                 this.caseSelected.setBorder(Color.BLACK);
                 caseSelected = null;
             }

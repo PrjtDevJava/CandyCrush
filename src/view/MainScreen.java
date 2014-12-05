@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,8 +25,8 @@ public class MainScreen extends JFrame{
     private final int WIN_H = 580;
     private final int GRID_SIZE = 480;
     private final String POLICE = "Thomas";
-    private JPanel gridPane;
-    private JLabel labPoints;
+    private final JPanel gridPane;
+    private final JLabel labPoints;
 
     public MainScreen() {
         this.setTitle("Candy Crush 2.0");
@@ -70,26 +71,36 @@ public class MainScreen extends JFrame{
         menuPane.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         menuPane.setBackground(Color.blue);
 
+        
+        
         JLabel labTime = new JLabel("2:30");
         labTime.setFont(new Font(POLICE, 0, 18));
         labPoints = new JLabel();
         labPoints.setFont(new Font(POLICE, 0, 18));
+        TimeCounter tc = new TimeCounter(99);
+        JPanel jp = new JPanel();
+        jp.setBackground(Color.yellow);
+        jp.setLayout(new BoxLayout(jp, BoxLayout.LINE_AXIS));
+        jp.add(labPoints);
 
-        GroupLayout menuGrLayout = new GroupLayout(menuPane);
-        menuPane.setLayout(menuGrLayout);
-        menuGrLayout.setHorizontalGroup(
-                menuGrLayout.createSequentialGroup()
-                .addGap(15)
-                .addGroup(menuGrLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(labTime)
-                        .addComponent(labPoints)
-                )
-        );
-        menuGrLayout.setVerticalGroup(
-                menuGrLayout.createSequentialGroup()
-                .addComponent(labTime)
-                .addComponent(labPoints)
-        );
+        menuPane.setLayout(new BoxLayout(menuPane, BoxLayout.PAGE_AXIS));
+        menuPane.add(tc);
+        menuPane.add(jp);
+       
+//        GroupLayout menuGrLayout = new GroupLayout(menuPane);
+//        menuGrLayout.setHorizontalGroup(
+//                menuGrLayout.createSequentialGroup()
+//                .addGap(15)
+//                .addGroup(menuGrLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                        .addComponent(jp, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+//                        .addComponent(labPoints)
+//                )
+//        );
+//        menuGrLayout.setVerticalGroup(
+//                menuGrLayout.createSequentialGroup()
+//                .addComponent(jp, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+//                .addComponent(labPoints)
+//        );
 
         GroupLayout grLayout = new GroupLayout(this.getContentPane());
         this.setLayout(grLayout);
