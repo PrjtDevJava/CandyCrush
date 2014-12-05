@@ -12,6 +12,7 @@ import javax.swing.BorderFactory;
 import model.Case;
 import model.Grid;
 import model.Shape;
+import model.UpdateAgregation;
 import view.CasePane;
 
 /**
@@ -21,13 +22,11 @@ import view.CasePane;
 public class GridController implements MouseListener{
     private Grid grid;
     private CasePane caseSelected;
-    private int points; // *** Temporaire
     
     
     GridController(Grid grid){
         this.grid = grid;
         this.caseSelected = null;
-        this.points = 0;
     }
     
     @Override
@@ -37,7 +36,7 @@ public class GridController implements MouseListener{
             CasePane pane = (CasePane)ev.getSource();
             if(caseSelected == null){
                 caseSelected = pane;
-                pane.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 2));
+                pane.setBorder(Color.ORANGE);
             }
             // Si il y seulement un carreau d'écart (haut, bas, doite, gauche mais pas diagonale)
             else if(pane != this.caseSelected &&
@@ -45,30 +44,22 @@ public class GridController implements MouseListener{
                     (caseSelected.y - pane.y) <= 1 && (caseSelected.y - pane.y) >= -1 && (caseSelected.x - pane.x) == 0){
                 Case c1 = grid.getCase(caseSelected.x, caseSelected.y);
                 Case c2 = grid.getCase(pane.x, pane.y);
-                Shape tmpShape = c1.getShape();
-                c1.setShape(c2.getShape());
-                c2.setShape(tmpShape);
-                int pointsAdd = c1.aggregation();
-                pointsAdd +=  c2.aggregation(); // On regarde s'il y a une aggrégation quand on inverse les cases
-               if(pointsAdd > 0){
-                   points += pointsAdd;
-                   c1.changeShape(c1.getShape());
-                   c2.changeShape(c2.getShape());
-               }
-               else{
-                   c2.setShape(c1.getShape());
-                   c1.setShape(tmpShape);
-               }
-                this.caseSelected.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+                
+//                int pointsAdd = c1.aggregation();
+//                pointsAdd +=  c2.aggregation(); // On regarde s'il y a une aggrégation quand on inverse les cases
+               
+                UpdateAgregation updtAgreg = new UpdateAgregation(c1);
+                updtAgreg.playCases(c2); // Test les 2 case utilisateur
+                this.caseSelected.setBorder(Color.BLACK);
                 caseSelected = null;
             }
             else{
-                this.caseSelected.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+                this.caseSelected.setBorder(Color.BLACK);
                 caseSelected = null;
             }
         }
         else{
-            this.caseSelected.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+            this.caseSelected.setBorder(Color.BLACK);
             caseSelected = null;
         }
         

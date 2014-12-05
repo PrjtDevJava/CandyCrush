@@ -23,11 +23,12 @@ public class UpdateAgregation extends java.lang.Thread {
     private static Set<Integer> setColumnToUpdGrav = Collections.synchronizedSet(new HashSet());
     private static PointsCounter pc = null;
     
-    private Case c;
+    private Case c1;
     
     public UpdateAgregation(Case c){
-        this.c = c;
+        this.c1 = c;
     }
+    
     
     private static synchronized void incrementThread(){
         nbThread++;
@@ -38,7 +39,7 @@ public class UpdateAgregation extends java.lang.Thread {
         if(nbThread == 0){
             //System.out.println("Send--------------");
             for (Integer it: setColumnToUpdGrav) {
-                new UpdateGravity(it, c.getGrid()).start();
+               new UpdateGravity(it, c.getGrid()).start();
             }
             System.out.println("Column to update grav : " + setColumnToUpdGrav);
             setColumnToUpdGrav.clear();
@@ -52,13 +53,43 @@ public class UpdateAgregation extends java.lang.Thread {
     public static synchronized void addPoints(int points){
         UpdateAgregation.pc.addPoints(points);
     }
-    
-    @Override
-    @SuppressWarnings("empty-statement")
-    public void run(){
+    /**
+     * Cette fonction permet jouer les cases utilisateur en mode synchrone
+     * @param c2 : La 2ème case que l'utilisateur à choisi
+     * @return true si au moins une des cases utilisateur a été "aggrégée"
+     */
+    public boolean playCases(Case c2){
+        incrementThread();
+        incrementThread();
+        boolean goodMove = false;
+        Shape tmpShape = c1.getShape();
+        c1.setShape(c2.getShape());
+        c2.setShape(tmpShape);
         
+        if(this.agregation(this.c1) != 0){
+            goodMove = true;
+        }
+        if(this.agregation(c2) != 0){
+            goodMove = true;
+        }
+        if(goodMove){
+            c1.changeShape(c1.getShape());
+            c2.changeShape(c2.getShape());
+        }
+        else{
+            c2.setShape(c1.getShape());
+            c1.setShape(tmpShape);
+        }
+        decrementThread(c1);
+        decrementThread(c2);
+        return goodMove;
+    }
+    
+    
+    @SuppressWarnings("empty-statement")
+    public int agregation(Case c){
+        int points = 0;
         if(c != null && c.getShape() != null && c.getType() != Type.EMPTY){
-            incrementThread();
             //System.out.println("Thread : " + Thread.currentThread().getId() + "  -> nb : " + nbThread);
             synchronized(c.getGrid()){
                 Grid grid = c.getGrid();
@@ -68,7 +99,6 @@ public class UpdateAgregation extends java.lang.Thread {
                 int nbL; // Nombre de bonnes case à gauche
                 int nbT; // Nombre de bonnes case en haut
                 int nbB; // Nombre de bonnes case en bas
-                int points = 0;
 
                 int i;
                 for(i=c.getX()+1; i < grid.getWidth() && grid.getCase(i, c.getY()).getShape() == c.getShape(); i++);
@@ -95,7 +125,6 @@ public class UpdateAgregation extends java.lang.Thread {
                     nbL=0;
                 }
 
-
                 if((nbT + nbB + 1) >= NB_CASE_POINT){
                     for(int j=c.getY()-nbT; j < (c.getY()+nbB+1); j++){
                         grid.getCase(c.getX(), j).setShape(null);
@@ -116,10 +145,16 @@ public class UpdateAgregation extends java.lang.Thread {
                 }
             }
         }
-        decrementThread(c);
+        
         //System.out.println("Dell Thread : " + Thread.currentThread().getId() + "  -> nb : " + nbThread);
         }
-        
-        
+        return points;
+    }
+    
+    @Override
+    public void run(){
+        incrementThread();
+        agregation(c1);
+        decrementThread(c1);
     }
 }

@@ -7,6 +7,7 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 import model.Case;
 import model.Shape;
 import model.Type;
@@ -15,6 +16,7 @@ public class CasePane extends JPanel implements Observer {
 
     public int x; // Public pas très sécurisé, mais plus simple
     public int y;
+    private final int BORDER_SIZE = 1;
     private BufferedImage image;
 
     public CasePane() {
@@ -25,10 +27,15 @@ public class CasePane extends JPanel implements Observer {
     public void init(int x, int y, Shape shape) {
         this.x = x;
         this.y = y;
-        this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        this.setBorder(BorderFactory.createLineBorder(Color.BLACK, BORDER_SIZE));
         this.setBackground(shape.getColor());
         this.image = shape.getImage();
     }
+    
+    public void setBorder(Color color){
+        this.setBorder(BorderFactory.createLineBorder(color, BORDER_SIZE));
+    }
+    
 
     @Override
     public void update(Observable obs, Object obj) {
