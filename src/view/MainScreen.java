@@ -31,14 +31,14 @@ public class MainScreen extends JFrame {
     private final JLabel labPoints;
 
     public MainScreen(int x, int y) throws IOException {
-        this.setTitle("Candy Crush 2.0");
+        this.setTitle("Candy Crush Stone");
         this.GRID_H = 60 * y;
         this.GRID_W = 60 * x;
         this.WIN_H = 61 + GRID_H;
         this.WIN_W = 190 + GRID_W;
         this.setSize(WIN_W, WIN_H);
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
         ////////////////////////////////////////////////////
         ////                  Barre Menu                ////
