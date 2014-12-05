@@ -20,9 +20,9 @@ import model.Grid;
 
 public class MainScreen extends JFrame{
 
-    private final int WIN_W = 700;
-    private final int WIN_H = 580;
-    private final int GRID_SIZE = 480;
+    private final int WIN_W = 650;
+    private final int WIN_H = 550;
+    private final int GRID_SIZE = 488;
     private final String POLICE = "Thomas";
     private JPanel gridPane;
     private JLabel labPoints;
@@ -62,13 +62,13 @@ public class MainScreen extends JFrame{
         ////////////////////////////////////////////////////////////
         
         gridPane = new JPanel();
-        gridPane.setBackground(Color.black);
         gridPane.setPreferredSize(new Dimension(GRID_SIZE, GRID_SIZE));
+        gridPane.setBackground(Color.black);
         
         JPanel menuPane = new JPanel();
         menuPane.setPreferredSize(new Dimension(130, GRID_SIZE));
-        menuPane.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        menuPane.setBackground(Color.blue);
+        menuPane.setBackground(new Color(222, 217, 185));
+        menuPane.setBorder(BorderFactory.createLineBorder(new Color(211, 204, 160), 1));
 
         JLabel labTime = new JLabel("2:30");
         labTime.setFont(new Font(POLICE, 0, 18));

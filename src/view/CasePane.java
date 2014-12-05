@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import model.Case;
 import model.Shape;
@@ -25,9 +24,9 @@ public class CasePane extends JPanel implements Observer {
     public void init(int x, int y, Shape shape) {
         this.x = x;
         this.y = y;
-        this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        this.setBackground(shape.getColor());
         this.image = shape.getImage();
+        this.setBorder(shape.getBorder());
+        this.setBackground(shape.getColor());
     }
 
     @Override
@@ -38,8 +37,8 @@ public class CasePane extends JPanel implements Observer {
                 this.setBackground(c.getShape().getColor());
                 this.image = c.getShape().getImage();
             } else {
+//                this.setBackground(Color.LIGHT_GRAY);
                 this.image = null;
-                this.setBackground(Color.BLACK);
             }
         }
     }
@@ -47,7 +46,7 @@ public class CasePane extends JPanel implements Observer {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image, 0, 0, null); // see javadoc for more info on the parameters            
+        g.drawImage(image, 0, 0, null);
     }
 
 }
