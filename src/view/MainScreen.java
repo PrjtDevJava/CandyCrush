@@ -20,17 +20,22 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import model.Grid;
 
-public class MainScreen extends JFrame{
+public class MainScreen extends JFrame {
 
-    private final int WIN_W = 670;
-    private final int WIN_H = 550;
-    private final int GRID_SIZE = 488;
+    private int WIN_H;
+    private int WIN_W;
+    private int GRID_H;
+    private int GRID_W;
     private final String POLICE = "Thomas";
     private final JPanel gridPane;
     private final JLabel labPoints;
 
-    public MainScreen() throws IOException {
+    public MainScreen(int x, int y) throws IOException {
         this.setTitle("Candy Crush 2.0");
+        this.GRID_H = 60 * y;
+        this.GRID_W = 60 * x;
+        this.WIN_H = 61 + GRID_H;
+        this.WIN_W = 190 + GRID_W;
         this.setSize(WIN_W, WIN_H);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,21 +67,18 @@ public class MainScreen extends JFrame{
         ////////////////////////////////////////////////////////////
         ////                 Init Grille layout                 ////   
         ////////////////////////////////////////////////////////////
-        
         gridPane = new JPanel();
-        gridPane.setPreferredSize(new Dimension(GRID_SIZE, GRID_SIZE));
+        gridPane.setPreferredSize(new Dimension(GRID_W, GRID_H));
         gridPane.setBackground(Color.black);
-        
+
         JPanel menuPane = new JPanel();
-        menuPane.setPreferredSize(new Dimension(150, GRID_SIZE));
+        menuPane.setPreferredSize(new Dimension(150, GRID_H));
 //        menuPane.setBackground(new Color(222, 217, 185));
 //        menuPane.setBorder(BorderFactory.createLineBorder(new Color(211, 204, 160), 1));
 
-        
-        
         JLabel labTime = new JLabel("2:30");
         labTime.setFont(new Font(POLICE, 0, 18));
-        
+
         // Timer
         JPanel jpTimer = new JPanel();
         jpTimer.setLayout(new BoxLayout(jpTimer, BoxLayout.Y_AXIS));
@@ -91,13 +93,13 @@ public class MainScreen extends JFrame{
         jpScore.add(new JLabel("Score :"));
         jpScore.add(labPoints);
         // Logo
-        JLabel logo = new JLabel(new ImageIcon("./src/images/logopetit.png")); 
-        
+        JLabel logo = new JLabel(new ImageIcon("./src/images/logopetit.png"));
+
         menuPane.setLayout(new BoxLayout(menuPane, BoxLayout.PAGE_AXIS));
         menuPane.add(jpTimer);
         menuPane.add(jpScore);
         menuPane.add(logo);
-       
+
 //        GroupLayout menuGrLayout = new GroupLayout(menuPane);
 //        menuGrLayout.setHorizontalGroup(
 //                menuGrLayout.createSequentialGroup()
@@ -112,7 +114,6 @@ public class MainScreen extends JFrame{
 //                .addComponent(jp, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 //                .addComponent(labPoints)
 //        );
-
         GroupLayout grLayout = new GroupLayout(this.getContentPane());
         this.setLayout(grLayout);
         grLayout.setHorizontalGroup(
@@ -130,10 +131,9 @@ public class MainScreen extends JFrame{
         );
     }
 
-    
-    public void addGridListener(MouseListener ml, Grid grid){
-       this.gridPane.setLayout(new GridLayout(grid.getHeight(), grid.getWidth()));
-       for (int i = 0; i < grid.getHeight(); i++) {
+    public void addGridListener(MouseListener ml, Grid grid) {
+        this.gridPane.setLayout(new GridLayout(grid.getHeight(), grid.getWidth()));
+        for (int i = 0; i < grid.getHeight(); i++) {
             for (int j = 0; j < grid.getWidth(); j++) {
                 CasePane cp = new CasePane();
                 grid.getCase(j, i).addObserver(cp);
@@ -143,8 +143,8 @@ public class MainScreen extends JFrame{
             }
         }
     }
-    
-    public JLabel getLabPoints(){
+
+    public JLabel getLabPoints() {
         return this.labPoints;
     }
 
