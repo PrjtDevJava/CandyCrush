@@ -48,16 +48,16 @@ public class GridController implements MouseListener{
                
                 UpdateAgregation updtAgreg = new UpdateAgregation(c1);
                 updtAgreg.playCases(c2); // Test les 2 cases choisies par l'utilisateur
-                this.caseSelected.setBorder(Color.BLACK);
+                this.caseSelected.setBorder(CasePane.BORDER_COLOR_DEFAULT);
                 caseSelected = null;
             }
             else{
-                this.caseSelected.setBorder(Color.BLACK);
+                this.caseSelected.setBorder(CasePane.BORDER_COLOR_DEFAULT);
                 caseSelected = null;
             }
         }
         else{
-            this.caseSelected.setBorder(Color.BLACK);
+            this.caseSelected.setBorder(CasePane.BORDER_COLOR_DEFAULT);
             caseSelected = null;
         }
         

@@ -7,13 +7,12 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 import model.Case;
 import model.Shape;
 import model.Type;
 
 public class CasePane extends JPanel implements Observer {
-
+    public static Color BORDER_COLOR_DEFAULT = Color.LIGHT_GRAY;
     public int x; // Public pas très sécurisé, mais plus simple
     public int y;
     private final int BORDER_SIZE = 1;
@@ -27,9 +26,11 @@ public class CasePane extends JPanel implements Observer {
     public void init(int x, int y, Shape shape) {
         this.x = x;
         this.y = y;
-        this.setBorder(BorderFactory.createLineBorder(Color.BLACK, BORDER_SIZE));
+        this.setBorder(BorderFactory.createLineBorder(BORDER_COLOR_DEFAULT, BORDER_SIZE));
         this.setBackground(shape.getColor());
         this.image = shape.getImage();
+        this.setBorder(shape.getBorder());
+        this.setBackground(shape.getColor());
     }
     
     public void setBorder(Color color){
@@ -45,8 +46,8 @@ public class CasePane extends JPanel implements Observer {
                 this.setBackground(c.getShape().getColor());
                 this.image = c.getShape().getImage();
             } else {
+                this.setBackground(Color.LIGHT_GRAY);
                 this.image = null;
-                this.setBackground(Color.BLACK);
             }
         }
     }
@@ -54,7 +55,7 @@ public class CasePane extends JPanel implements Observer {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image, 0, 0, null); // see javadoc for more info on the parameters            
+        g.drawImage(image, 0, 0, null);
     }
 
 }

@@ -26,8 +26,6 @@ public class Grid {
     }
 
     public void initGrid() {
-        
-        
         for (int j = 0; j < this.y; j++) {
             for (int i = 0; i < this.x; i++) {
                 this.matrix[j][i] = new Case(i, j, Type.NORMAL, this);
