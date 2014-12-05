@@ -9,7 +9,6 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
-import javax.swing.border.Border;
 import model.Case;
 import model.Grid;
 import model.Shape;
@@ -60,16 +59,16 @@ public class GridController implements MouseListener{
                    c2.setShape(c1.getShape());
                    c1.setShape(tmpShape);
                }
-                this.caseSelected.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+                this.caseSelected.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
                 caseSelected = null;
             }
             else{
-                this.caseSelected.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+                this.caseSelected.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
                 caseSelected = null;
             }
         }
         else{
-            this.caseSelected.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+            this.caseSelected.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
             caseSelected = null;
         }
         

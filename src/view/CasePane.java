@@ -38,6 +38,7 @@ public class CasePane extends JPanel implements Observer {
                 this.setBackground(c.getShape().getColor());
                 this.image = c.getShape().getImage();
             } else {
+                this.image = null;
                 this.setBackground(Color.BLACK);
             }
         }
