@@ -38,7 +38,7 @@ public class MainScreen extends JFrame {
         this.WIN_W = 190 + GRID_W;
         this.setSize(WIN_W, WIN_H);
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         ////////////////////////////////////////////////////
         ////                  Barre Menu                ////
