@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
-import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import model.Case;
@@ -13,10 +7,6 @@ import model.Grid;
 import model.UpdateAgregation;
 import view.CasePane;
 
-/**
- *
- * @author Sylvio
- */
 public class GridController implements MouseListener {
 
     private Grid grid;

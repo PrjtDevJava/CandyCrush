@@ -11,11 +11,11 @@ public enum Shape {
     DIAMANT("diamant"),
     SAPHIR("saphir"),
     RUBIS("rubis"),
+    EMERAUDE("emeraude"),
     AGATHE("agathe"),
     CRISTAL("cristal"),
     AIGUEMARINE("aiguemarine"),
-    TOPAZE("topaze"),
-    EMERAUDE("emeraude");
+    TOPAZE("topaze");
     BufferedImage image;
 
     Shape(String fichier) {

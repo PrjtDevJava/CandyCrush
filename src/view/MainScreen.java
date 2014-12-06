@@ -38,7 +38,7 @@ public class MainScreen extends JFrame {
         this.WIN_W = 190 + GRID_W;
         this.setSize(WIN_W, WIN_H);
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         ////////////////////////////////////////////////////
         ////                  Barre Menu                ////
@@ -69,12 +69,9 @@ public class MainScreen extends JFrame {
         ////////////////////////////////////////////////////////////
         gridPane = new JPanel();
         gridPane.setPreferredSize(new Dimension(GRID_W, GRID_H));
-        gridPane.setBackground(Color.black);
 
         JPanel menuPane = new JPanel();
         menuPane.setPreferredSize(new Dimension(150, GRID_H));
-//        menuPane.setBackground(new Color(222, 217, 185));
-//        menuPane.setBorder(BorderFactory.createLineBorder(new Color(211, 204, 160), 1));
 
         JLabel labTime = new JLabel("2:30");
         labTime.setFont(new Font(POLICE, 0, 18));
