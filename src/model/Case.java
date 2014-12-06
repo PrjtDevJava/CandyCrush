@@ -90,7 +90,7 @@ public class Case extends Observable {
 
     @Override
     public String toString() {
-        if(this == null || this.shape == null){
+        if(this == null || this.type == null || this.shape == null){
             return "null";
         }
         if (this.type == Type.EMPTY) {
