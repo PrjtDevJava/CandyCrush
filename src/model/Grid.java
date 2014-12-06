@@ -18,7 +18,6 @@ public class Grid {
         boolean ok;
         for (int j = 0; j < this.y; j++) {
             for (int i = 0; i < this.x; i++) {
-                System.out.println(i + " - " + j);
                 do {
                     ok = true;
                     this.matrix[j][i] = new Case(i, j, Type.NORMAL, this);
