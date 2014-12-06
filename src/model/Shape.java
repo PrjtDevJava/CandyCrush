@@ -16,7 +16,7 @@ public enum Shape {
     CRISTAL("cristal"),
     AIGUEMARINE("aiguemarine"),
     TOPAZE("topaze");
-    BufferedImage image;
+    private BufferedImage image;
 
     Shape(String fichier) {
         try {

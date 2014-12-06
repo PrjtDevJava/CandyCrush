@@ -14,30 +14,27 @@ public class Grid {
         this.nbShape = nbShape;
     }
 
-    public void applyGravity() {
-        for (int i = 0; i < this.x; i++) {
-            for (int j = this.y - 1; j > 0; j--) {
-                if (this.matrix[j][i].getType() == Type.EMPTY) {
-                    for (int k = j; k > 0; k--) {
-                        this.matrix[k][i].regenerate(this.matrix[k - 1][i]);
-                    }
-                    this.matrix[0][i].regenerate(new Case(i, j, Type.NORMAL, this));
-                }
-            }
-        }
-    }
-
     public void initGrid() {
+        boolean ok;
         for (int j = 0; j < this.y; j++) {
             for (int i = 0; i < this.x; i++) {
-                this.matrix[j][i] = new Case(i, j, Type.NORMAL, this);
+                System.out.println(i + " - " + j);
+                do {
+                    ok = true;
+                    this.matrix[j][i] = new Case(i, j, Type.NORMAL, this);
+                    if (i > 1 && this.matrix[j][i].equals(this.matrix[j][i - 1]) && this.matrix[j][i - 1].equals(this.matrix[j][i - 2])) {
+                        ok = false;
+                    }
+                    if (j > 1 && this.matrix[j][i].equals(this.matrix[j - 1][i]) && this.matrix[j - 1][i].equals(this.matrix[j - 2][i])) {
+                        ok = false;
+                    }
+                } while (!ok);
             }
-        
         }
     }
 
     public Case getCase(int x, int y) {
-        if (x >= 0 && x < this.x && y >= 0 &&y < this.y) {
+        if (x >= 0 && x < this.x && y >= 0 && y < this.y) {
             return matrix[y][x];
         }
         return null;

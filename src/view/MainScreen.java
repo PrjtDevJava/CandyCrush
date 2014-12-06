@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -26,6 +27,7 @@ public class MainScreen extends JFrame {
     private int WIN_W;
     private int GRID_H;
     private int GRID_W;
+    public static Color BACKGROUND_COLOR = CasePane.HOVER_COLOR;
     private final String POLICE = "Thomas";
     private final JPanel gridPane;
     private final JLabel labPoints;
@@ -34,11 +36,13 @@ public class MainScreen extends JFrame {
         this.setTitle("Candy Crush Stone");
         this.GRID_H = 60 * y;
         this.GRID_W = 60 * x;
-        this.WIN_H = 61 + GRID_H;
-        this.WIN_W = 190 + GRID_W;
+        this.WIN_H = 51 + GRID_H;
+        this.WIN_W = 170 + GRID_W;
         this.setSize(WIN_W, WIN_H);
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.getContentPane().setBackground(BACKGROUND_COLOR);
 
         ////////////////////////////////////////////////////
         ////                  Barre Menu                ////
@@ -97,6 +101,10 @@ public class MainScreen extends JFrame {
         menuPane.add(jpScore);
         menuPane.add(logo);
 
+        menuPane.setBackground(BACKGROUND_COLOR);
+        for (Component c : menuPane.getComponents()) {
+            c.setBackground(BACKGROUND_COLOR);
+        }
 //        GroupLayout menuGrLayout = new GroupLayout(menuPane);
 //        menuGrLayout.setHorizontalGroup(
 //                menuGrLayout.createSequentialGroup()
