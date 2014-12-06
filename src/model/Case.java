@@ -11,7 +11,7 @@ public class Case extends Observable {
     private final int y;
 
     public Case(int x, int y, Type type, Grid grid) {
-        this.shape = Shape.values()[(int) (Math.random() * ((Shape.values().length - 1) + 1))];
+        this.shape = Shape.values()[(int) (Math.random() * ((grid.getNbShape() - 1) + 1))];
         this.type = type;
         this.grid = grid;
         this.x = x;
@@ -23,7 +23,7 @@ public class Case extends Observable {
      * @param type : Le type que l'on veut donner à la case
      */
     public void regenerate(Type type){
-        this.shape = Shape.values()[(int) (Math.random() * ((Shape.values().length - 1) + 1))];
+        this.shape = Shape.values()[(int) (Math.random() * ((grid.getNbShape() - 1) + 1))];
         this.type = type;
         setChanged(); 
         notifyObservers(); // si un observer n'a pas perçus de changement depuis son dernier appel, il ne fait rien

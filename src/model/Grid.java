@@ -5,11 +5,13 @@ public class Grid {
     private Case matrix[][];
     private final int x;  // Largeur
     private final int y;  // Hauteur
+    private final int nbShape;  // Hauteur
 
-    public Grid(int x, int y) {
+    public Grid(int x, int y, int nbShape) {
         this.matrix = new Case[y][x];
         this.x = x;
         this.y = y;
+        this.nbShape = nbShape;
     }
 
     public void applyGravity() {
@@ -51,6 +53,10 @@ public class Grid {
 
     public int getHeight() {
         return y;
+    }
+
+    public int getNbShape() {
+        return nbShape;
     }
 
     @Override

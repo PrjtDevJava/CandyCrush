@@ -1,19 +1,18 @@
 package controller;
 
+import java.io.IOException;
 import model.Grid;
-import model.PointsCounter;
 import view.MainScreen;
 
 public class MainController {
 
-    public MainController() {
-        Grid g = new Grid(8, 8);
-        MainScreen MScreen = new MainScreen();
+    public MainController(int x, int y, int nbShape) throws IOException {
+        Grid g = new Grid(x, y, nbShape);
+        MainScreen MScreen = new MainScreen(x, y);
         g.initGrid();
         MScreen.addGridListener(new GridController(g), g);
         PointsController pc = new PointsController(MScreen.getLabPoints());
         MScreen.setVisible(true);
-        
     }
 
 }
