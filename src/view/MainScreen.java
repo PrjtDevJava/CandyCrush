@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseListener;
@@ -83,14 +84,13 @@ public class MainScreen extends JFrame {
         labTime.setFont(new Font(POLICE, 0, 18));
 
         // Timer
-        
-       
         JPanel jpTimer = new JPanel();
         jpTimer.setLayout(new BoxLayout(jpTimer, BoxLayout.Y_AXIS));
         TimeCounter tc = new TimeCounter(99);
-        jpTimer.add(new JLabel("Temps restant :"));
+        tc.setFont(new Font("Impact", 0, 20));
+        jpTimer.add(new JLabel("<html><div style=\"padding-left:15px;color:#222222;margin-top:50px;\">temps restant :</div></html>"));
         jpTimer.add(tc);
-        
+
 // ------------------- Au cas ou on veut afficher quelque chose sous le timer : -------------------------
 //        JPanel jj = new JPanel();
 //        jj.setBackground(Color.yellow);
@@ -108,22 +108,21 @@ public class MainScreen extends JFrame {
 //                .addComponent(tc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 //        );
 //        jpTimer.add(jj);
-        
-        
-        
-        
         //tc.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         
         // Scores
         JPanel jpScore = new JPanel();
         jpScore.setLayout(new BoxLayout(jpScore, BoxLayout.Y_AXIS));
         labPoints = new JLabel();
-        labPoints.setFont(new Font(POLICE, 0, 18));
-        jpScore.add(new JLabel("Score :"));
+        labPoints.setFont(new Font("Impact", 0, 20));
+        labPoints.setForeground(new Color(50, 50, 50));
+        labPoints.setSize(new Dimension(5000, 550));
+        labPoints.setHorizontalTextPosition(JLabel.CENTER);
+        jpScore.add(new JLabel("<html><div style=\"padding-left:35px;color:#222222;margin-top:10px;\">score :</div></html>"));
         jpScore.add(labPoints);
         // Logo
         JLabel logo = new JLabel(new ImageIcon("./src/images/logopetit.png"));
-        
+
         menuPane.setLayout(new BoxLayout(menuPane, BoxLayout.PAGE_AXIS));
         menuPane.add(jpScore);
         menuPane.add(jpTimer);
@@ -133,7 +132,7 @@ public class MainScreen extends JFrame {
         for (Component c : menuPane.getComponents()) {
             c.setBackground(BACKGROUND_COLOR);
         }
-        
+
         GroupLayout grLayout = new GroupLayout(this.getContentPane());
         this.setLayout(grLayout);
         grLayout.setHorizontalGroup(
