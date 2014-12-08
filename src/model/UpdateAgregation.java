@@ -28,7 +28,7 @@ public class UpdateAgregation extends java.lang.Thread {
             for (Integer it : setColumnToUpdGrav) {
                 new UpdateGravity(it, c.getGrid()).start();
             }
-            System.out.println("Column to update grav : " + setColumnToUpdGrav);
+            //System.out.println("Column to update grav : " + setColumnToUpdGrav);
             setColumnToUpdGrav.clear();
         }
     }
