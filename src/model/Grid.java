@@ -21,10 +21,10 @@ public class Grid {
                 do {
                     ok = true;
                     this.matrix[j][i] = new Case(i, j, Type.NORMAL, this);
-                    if (i > 1 && this.matrix[j][i].equals(this.matrix[j][i - 1]) && this.matrix[j][i - 1].equals(this.matrix[j][i - 2])) {
+                    if (i > 1 && this.matrix[j][i].equivalent(this.matrix[j][i - 1]) && this.matrix[j][i - 1].equivalent(this.matrix[j][i - 2])) {
                         ok = false;
                     }
-                    if (j > 1 && this.matrix[j][i].equals(this.matrix[j - 1][i]) && this.matrix[j - 1][i].equals(this.matrix[j - 2][i])) {
+                    if (j > 1 && this.matrix[j][i].equivalent(this.matrix[j - 1][i]) && this.matrix[j - 1][i].equivalent(this.matrix[j - 2][i])) {
                         ok = false;
                     }
                 } while (!ok);
