@@ -9,7 +9,7 @@ import javax.swing.Timer;
 
 public class TimeCounter extends JPanel {
 
-    private static Font f = new Font("Book Antiqua", Font.BOLD, 25);
+    private static Font f = new Font("Impact", 0, 20);
 
     /**
      * timer : timer servant à décrémenter le chronometre

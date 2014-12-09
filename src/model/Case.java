@@ -106,25 +106,16 @@ public class Case extends Observable {
         }
         return this.type.ordinal() + "" + this.shape.ordinal() + " ";
     }
-
-//    @Override
-//    public int hashCode() {
-//        int hash = 3;
-//        hash = 53 * hash + Objects.hashCode(this.shape);
-//        hash = 53 * hash + Objects.hashCode(this.type);
-//        return hash;
-//    }
-//
-//    @Override
-//    public boolean equals(Object obj) {
-//        if (obj == null || getClass() != obj.getClass()) {
-//            return false;
-//        }
-//        final Case c = (Case) obj;
-//        if (this.shape != c.shape || this.type != c.type) {
-//            return false;
-//        }
-//        return true;
-//    }
+    
+    public boolean equivalent(Object obj) {
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final Case c = (Case) obj;
+        if (this.shape != c.shape || this.type != c.type) {
+            return false;
+        }
+        return true;
+    }
 
 }
