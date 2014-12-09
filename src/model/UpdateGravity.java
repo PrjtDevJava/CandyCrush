@@ -40,6 +40,7 @@ public class UpdateGravity extends java.lang.Thread {
                 System.out.println("x: " + curCase.getX() + " y: " + curCase.getY());
             }
             setCaseToUpdAgreg.clear();
+            
         }
     }
 
@@ -60,8 +61,8 @@ public class UpdateGravity extends java.lang.Thread {
 
             for (int i = numStartC; i >= 0; i--) {
                 Case tmpCase = grid.getCase(column, i);
+                setCaseToUpdAgreg.add(tmpCase); // Ajoute dans la liste à an
                 if (tmpCase.getType() != Type.EMPTY) {
-                    setCaseToUpdAgreg.add(tmpCase);
                     startC.regenerate(tmpCase);
                     tmpCase.setShape(null);
                     tmpCase.changeType(Type.EMPTY);
@@ -76,7 +77,8 @@ public class UpdateGravity extends java.lang.Thread {
             for (int i = numStartC; i >= 0; i--) {
                 Case tmpCase = grid.getCase(column, i);
                 tmpCase.regenerate(Type.NORMAL);
-                setCaseToUpdAgreg.add(tmpCase);
+                System.out.println("Rgenerate ----------");
+                //setCaseToUpdAgreg.add(tmpCase);
             }
         }
         decrementThread();
