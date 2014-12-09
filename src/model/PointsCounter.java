@@ -16,6 +16,8 @@ public class PointsCounter extends Observable {
 
     public void setPoints(int points) {
         this.points = points;
+        setChanged();
+        notifyObservers();
     }
 
     public void addPoints(int points) {
@@ -26,7 +28,7 @@ public class PointsCounter extends Observable {
 
     @Override
     public String toString() {
-        return "" + points;
+        return "<html><div style=\"margin-left:40px;\">" + points + "</div></html>";
     }
 
 }

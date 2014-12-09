@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Objects;
 import java.util.Observable;
 
 public class Case extends Observable {
@@ -106,7 +105,7 @@ public class Case extends Observable {
         }
         return this.type.ordinal() + "" + this.shape.ordinal() + " ";
     }
-    
+
     public boolean equivalent(Object obj) {
         if (obj == null || getClass() != obj.getClass()) {
             return false;

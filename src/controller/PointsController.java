@@ -9,13 +9,14 @@ import model.UpdateAgregation;
 public class PointsController implements Observer {
 
     private JLabel labP;
+    public PointsCounter pointCounter;
 
     public PointsController(JLabel labPoints) {
         this.labP = labPoints;
-        PointsCounter pc = new PointsCounter();
-        pc.addObserver(this);
-        UpdateAgregation.setPointsCounter(pc);
-        labP.setText("0");
+        this.pointCounter = new PointsCounter();
+        pointCounter.addObserver(this);
+        UpdateAgregation.setPointsCounter(pointCounter);
+        labP.setText(pointCounter.toString());
     }
 
     @Override

@@ -5,13 +5,11 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Label;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -34,6 +32,9 @@ public class MainScreen extends JFrame {
     private final String POLICE = "Thomas";
     private final JPanel gridPane;
     private final JLabel labPoints;
+    private final JMenuItem itemNwGame;
+    private final JMenuItem itemSaveGame;
+    private final JMenuItem itemLoadGame;
 
     public MainScreen(int x, int y) throws IOException {
         this.setTitle("Candy Crush Stone");
@@ -53,9 +54,9 @@ public class MainScreen extends JFrame {
         JMenuBar menuBar = new JMenuBar();
 
         JMenu menuGame = new JMenu("Partie");
-        JMenuItem itemNwGame = new JMenuItem("Nouvelle partie", KeyEvent.VK_N);
-        JMenuItem itemSaveGame = new JMenuItem("Sauvgarder partie", KeyEvent.VK_S);
-        JMenuItem itemLoadGame = new JMenuItem("Charger partie", KeyEvent.VK_O);
+        itemNwGame = new JMenuItem("Nouvelle partie", KeyEvent.VK_N);
+        itemSaveGame = new JMenuItem("Sauvgarder partie", KeyEvent.VK_S);
+        itemLoadGame = new JMenuItem("Charger partie", KeyEvent.VK_O);
         itemNwGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
         itemSaveGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
         itemLoadGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
@@ -65,6 +66,21 @@ public class MainScreen extends JFrame {
 
         JMenu menuOptions = new JMenu("Options");
         JMenu menuHelp = new JMenu("?");
+//        ActionListener actionMenu = new ActionListener() {
+//
+//            @Override
+//            public void actionPerformed(ActionEvent ae) {
+//                if (ae.getSource() == itemNwGame) {
+//                    Grid g = new Grid(5, 5, 5);
+//                    g.initGrid();try {
+//                        MainController game = new MainController(8, 8, 4);
+////                    MainScreen.this.addGridListener(new GridController(g), g);
+//                    } catch (IOException ex) {
+//                        Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//                }
+//            }
+//        };
 
         menuBar.add(menuGame);
         menuBar.add(menuOptions);
@@ -109,7 +125,6 @@ public class MainScreen extends JFrame {
 //        );
 //        jpTimer.add(jj);
         //tc.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        
         // Scores
         JPanel jpScore = new JPanel();
         jpScore.setLayout(new BoxLayout(jpScore, BoxLayout.Y_AXIS));
@@ -163,8 +178,11 @@ public class MainScreen extends JFrame {
         }
     }
 
+    public void addMenuListener(ActionListener ae) {
+        itemNwGame.addActionListener(ae);
+    }
+
     public JLabel getLabPoints() {
         return this.labPoints;
     }
-
 }
