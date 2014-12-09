@@ -37,7 +37,7 @@ public class UpdateGravity extends java.lang.Thread {
 //                }
                 //System.out.println("x: " + curCase.getX() + " y: " + curCase.getY());
                 new UpdateAgregation(curCase).start();
-                //System.out.println("x: " + curCase.getX() + " y: " + curCase.getY());
+                System.out.println("x: " + curCase.getX() + " y: " + curCase.getY());
             }
             setCaseToUpdAgreg.clear();
         }
@@ -52,6 +52,10 @@ public class UpdateGravity extends java.lang.Thread {
 
             int numStartC; // La case de départ (dès qu'on trouve un case non vide en dessous de la case c)
             for (numStartC = grid.getHeight() - 1; numStartC > 0 && grid.getCase(column, numStartC).getType() != Type.EMPTY; numStartC--);
+            if(numStartC+1 != grid.getHeight()){
+                setCaseToUpdAgreg.add(grid.getCase(column, numStartC+1));
+            }
+            
             Case startC = grid.getCase(column, numStartC);
 
             for (int i = numStartC; i >= 0; i--) {
