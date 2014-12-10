@@ -29,10 +29,15 @@ public class MainScreen extends JFrame {
     private int WIN_W;
     private int GRID_H;
     private int GRID_W;
+    TimeCounter tc;
     public static Color BACKGROUND_COLOR = CasePane.HOVER_COLOR;
     private final String POLICE = "Thomas";
     private final JPanel gridPane;
     private final JLabel labPoints;
+    private final JMenuItem itemNwGame;
+    private final JMenuItem itemSaveGame;
+    private final JMenuItem itemLoadGame;
+    private final JPanel jpTimer;
     private JMenuItem itemNwGame;
     private JMenuItem itemSaveGame;
     private JMenuItem itemLoadGame;
@@ -99,13 +104,13 @@ public class MainScreen extends JFrame {
         JPanel menuPane = new JPanel();
         menuPane.setPreferredSize(new Dimension(150, GRID_H));
 
-        JLabel labTime = new JLabel("2:30");
+        JLabel labTime = new JLabel();
         labTime.setFont(new Font(POLICE, 0, 18));
 
         // Timer
-        JPanel jpTimer = new JPanel();
+        jpTimer = new JPanel();
         jpTimer.setLayout(new BoxLayout(jpTimer, BoxLayout.Y_AXIS));
-        TimeCounter tc = new TimeCounter(99);
+        tc = new TimeCounter(0);
         tc.setFont(new Font("Impact", 0, 20));
         jpTimer.add(new JLabel("<html><div style=\"padding-left:15px;color:#222222;margin-top:50px;\">temps restant :</div></html>"));
         jpTimer.add(tc);
@@ -170,6 +175,8 @@ public class MainScreen extends JFrame {
 
     public void addGridListener(MouseListener ml, Grid grid) {
         this.gridPane.setLayout(new GridLayout(grid.getHeight(), grid.getWidth()));
+        tc.setTime(30);
+        tc.start();
         for (int i = 0; i < grid.getHeight(); i++) {
             for (int j = 0; j < grid.getWidth(); j++) {
                 CasePane cp = new CasePane();
