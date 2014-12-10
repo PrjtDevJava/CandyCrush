@@ -30,7 +30,7 @@ public class MainScreen extends JFrame {
     private int WIN_W;
     private int GRID_H;
     private int GRID_W;
-    TimeCounter tc;
+    public TimeCounter timer;
     public static Color BACKGROUND_COLOR = CasePane.HOVER_COLOR;
     private final String POLICE = "Thomas";
     private final JPanel gridPane;
@@ -108,10 +108,10 @@ public class MainScreen extends JFrame {
         // Timer
         jpTimer = new JPanel();
         jpTimer.setLayout(new BoxLayout(jpTimer, BoxLayout.Y_AXIS));
-        tc = new TimeCounter(0);
-        tc.setFont(new Font("Impact", 0, 20));
+        timer = new TimeCounter(0);
+        timer.setFont(new Font("Impact", 0, 20));
         jpTimer.add(new JLabel("<html><div style=\"padding-left:15px;color:#222222;margin-top:50px;\">temps restant :</div></html>"));
-        jpTimer.add(tc);
+        jpTimer.add(timer);
 
 // ------------------- Au cas ou on veut afficher quelque chose sous le timer : -------------------------
 //        JPanel jj = new JPanel();
@@ -173,8 +173,8 @@ public class MainScreen extends JFrame {
 
     public void addGridListener(MouseListener ml, Grid grid) {
         this.gridPane.setLayout(new GridLayout(grid.getHeight(), grid.getWidth()));
-        tc.setTime(30);
-        tc.start();
+        timer.setTime(30);
+        timer.start();
         for (int i = 0; i < grid.getHeight(); i++) {
             for (int j = 0; j < grid.getWidth(); j++) {
                 CasePane cp = new CasePane();
