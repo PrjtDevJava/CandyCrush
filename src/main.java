@@ -7,6 +7,6 @@ public class main {
 
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        MainController game = new MainController(8, 8, 8);
+        MainController game = new MainController(8, 8, 4);
     }
 }

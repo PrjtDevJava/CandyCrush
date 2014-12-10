@@ -17,6 +17,7 @@ import javax.swing.event.MenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import model.Grid;
 import model.PointsCounter;
+import view.HelpScreen;
 import view.MainScreen;
 import view.TimeCounter;
 
@@ -92,7 +93,7 @@ public class MenuController implements ActionListener, MenuListener {
     @Override
     public void menuSelected(MenuEvent me) {
         if (me.getSource() == this.mainscreen.getMenuHelp()) {
-//            JOptionPane.showInputDialog(mainscreen, "What is your name?", null);
+            HelpScreen hs = new HelpScreen();
         }
     }
 
