@@ -26,7 +26,9 @@ public class TimeCounter extends JPanel {
      */
     public TimeCounter(int N) {
         timer = createTimer ();
-        timer.start();
+        if(N != 0){
+            timer.start();
+        }
         setOpaque(false);
         setPreferredSize(new Dimension(72, 72));
         this.timeRest = new TimeMS(N);
@@ -87,9 +89,6 @@ public class TimeCounter extends JPanel {
         return this.timeRest.timeToSec();
     }
 
-    public void setTimeRest(int timeRest) {
-        this.timeRest.setTime(timeRest);
-    }
 
     public int getTime() {
         return time;
@@ -97,6 +96,7 @@ public class TimeCounter extends JPanel {
 
     public void setTime(int time) {
         this.time = time;
+        this.timeRest.setTime(time);
     }
     
     
