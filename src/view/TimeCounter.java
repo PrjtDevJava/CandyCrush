@@ -6,27 +6,26 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import model.utils.TimeMS;
 
-public class TimeCounter extends JPanel {
+public class TimeCounter extends JPanel implements Serializable {
 
     private static Font f = new Font("Impact", 0, 20);
-
     private Timer timer;
-
     private TimeMS timeRest;
-
     private int time;
 
     /**
      * Construction du chronometre
+     *
      * @param N : le nombre de secondes initial
      */
     public TimeCounter(int N) {
-        timer = createTimer ();
-        if(N != 0){
+        timer = createTimer();
+        if (N != 0) {
             timer.start();
         }
         setOpaque(false);
@@ -35,13 +34,12 @@ public class TimeCounter extends JPanel {
         this.setTime(N);
     }
 
-
-    public void start(){
-        timer.start ();
+    public void start() {
+        timer.start();
     }
-    
-    public void stop(){
-        timer.stop ();
+
+    public void stop() {
+        timer.stop();
     }
 
     @Override
@@ -60,16 +58,14 @@ public class TimeCounter extends JPanel {
     public void drawCircle(Graphics cg, int xCenter, int yCenter, int r) {
         cg.setColor(Color.white);
         cg.fillOval(xCenter - r, yCenter - r, 2 * r, 2 * r);
-        if(timeRest.timeToSec() < (time/4)){
+        if (timeRest.timeToSec() < (time / 4)) {
             cg.setColor(Color.RED);
-        }
-        else if(timeRest.timeToSec() < (time*(2f/3f))){
+        } else if (timeRest.timeToSec() < (time * (2f / 3f))) {
             cg.setColor(Color.ORANGE);
-        }
-        else{
+        } else {
             cg.setColor(Color.GREEN);
         }
-        
+
         cg.fillArc(xCenter - r, yCenter - r, 2 * r, 2 * r, 90, -(360 - timeRest.timeToSec() * 360 / time));
         cg.setColor(Color.black);
         cg.setFont(f);
@@ -83,12 +79,12 @@ public class TimeCounter extends JPanel {
 
     public void setTimer(Timer timer) {
         this.timer = timer;
+        this.repaint();
     }
 
     public int getTimeRest() {
         return this.timeRest.timeToSec();
     }
-
 
     public int getTime() {
         return time;
@@ -98,21 +94,19 @@ public class TimeCounter extends JPanel {
         this.time = time;
         this.timeRest.setTime(time);
     }
-    
-    
-    private Timer createTimer (){
-        ActionListener action = new ActionListener (){
+
+    private Timer createTimer() {
+        ActionListener action = new ActionListener() {
             @Override
-            public void actionPerformed (ActionEvent event){
-                if(timeRest.timeToSec() > 0){
+            public void actionPerformed(ActionEvent event) {
+                if (timeRest.timeToSec() > 0) {
                     timeRest.substractTime(1);
                     repaint();
-                }
-                else{
+                } else {
                     timer.stop();
                 }
             }
         };
-        return new Timer (1000, action);
+        return new Timer(1000, action);
     }
 }

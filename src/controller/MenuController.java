@@ -12,13 +12,13 @@ import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import model.Grid;
 import model.PointsCounter;
 import view.MainScreen;
+import view.TimeCounter;
 
 public class MenuController implements ActionListener, MenuListener {
 
@@ -35,8 +35,9 @@ public class MenuController implements ActionListener, MenuListener {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        System.out.println(ae.getSource().toString());
+        this.mainscreen.timer.stop();
         if (ae.getSource() == this.mainscreen.getItemNwGame()) {
+            this.mainscreen.timer.setTime(mainscreen.timer.getTime());
             this.grid.changeGrid();
             this.point.setPoints(0);
 
@@ -54,6 +55,7 @@ public class MenuController implements ActionListener, MenuListener {
                 ObjectOutputStream oos = new ObjectOutputStream(fos);
                 oos.writeObject(grid);
                 oos.writeObject(point);
+                oos.writeObject(mainscreen.timer);
                 oos.flush();
                 oos.close();
                 fos.close();
@@ -76,15 +78,17 @@ public class MenuController implements ActionListener, MenuListener {
                 ObjectInputStream ois = new ObjectInputStream(fis);
                 this.grid.changeGrid((Grid) ois.readObject());
                 this.point.setPoints(((PointsCounter) ois.readObject()).getPoints());
+                this.mainscreen.timer.setTime(((TimeCounter) ois.readObject()).getTimeRest());
                 ois.close();
                 fis.close();
             } catch (IOException | ClassNotFoundException ex) {
                 Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        this.mainscreen.timer.start();
 
     }
-    
+
     @Override
     public void menuSelected(MenuEvent me) {
         if (me.getSource() == this.mainscreen.getMenuHelp()) {
