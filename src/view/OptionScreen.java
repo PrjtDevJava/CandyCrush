@@ -19,6 +19,8 @@ public class OptionScreen extends javax.swing.JFrame {
      * Creates new form OptionScreen
      */
     public OptionScreen() {
+
+        initComponents();
         this.sliderH.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -26,8 +28,13 @@ public class OptionScreen extends javax.swing.JFrame {
                 OptionScreen.this.labCaseH.setText(""+js.getValue());
             }
         });
-        
-        initComponents();
+        this.sliderW.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                JSlider js = (JSlider)e.getSource();
+                OptionScreen.this.labCaseW.setText(""+js.getValue());
+            }
+        });
     }
 
     
@@ -53,6 +60,10 @@ public class OptionScreen extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Options");
+        setAlwaysOnTop(true);
+        setAutoRequestFocus(false);
+        setLocationByPlatform(true);
+        setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Grille"));
 
@@ -63,6 +74,7 @@ public class OptionScreen extends javax.swing.JFrame {
         jLabel1.setText("Nombre de cases largeur");
 
         sliderH.setMaximum(15);
+        sliderH.setMinimum(4);
         sliderH.setValue(8);
 
         jLabel2.setText("Nombre de cases hauteur");
@@ -84,10 +96,9 @@ public class OptionScreen extends javax.swing.JFrame {
                                 .addComponent(jLabel1))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(25, 25, 25)
-                                .addComponent(sliderW, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(sliderH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(sliderH, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                                    .addComponent(sliderW, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labCaseW, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -134,11 +145,11 @@ public class OptionScreen extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(136, 136, 136)
+                .addGap(155, 155, 155)
                 .addComponent(jButton1)
-                .addGap(60, 60, 60)
+                .addGap(72, 72, 72)
                 .addComponent(jButton2)
-                .addContainerGap(184, Short.MAX_VALUE))
+                .addContainerGap(153, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

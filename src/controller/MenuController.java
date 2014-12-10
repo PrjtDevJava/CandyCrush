@@ -48,7 +48,7 @@ public class MenuController implements ActionListener, MenuListener {
                 JFileChooser jfc = new JFileChooser(file.getCanonicalFile());
                 jfc.setDialogTitle("Sauvegarder la partie");
                 jfc.setFileFilter(new FileNameExtensionFilter("Sauvegarde (.save)", "save"));
-                jfc.showOpenDialog(null);
+                jfc.showSaveDialog(null);
 
                 // Sérialisation
                 fos = new FileOutputStream(jfc.getSelectedFile() + ".save");
@@ -69,7 +69,7 @@ public class MenuController implements ActionListener, MenuListener {
             try {
                 // Boite de dialogue
                 JFileChooser jfc = new JFileChooser(file.getCanonicalFile());
-                jfc.setDialogTitle("Sauvegarder la partie");
+                jfc.setDialogTitle("Charger une partie");
                 jfc.setFileFilter(new FileNameExtensionFilter("Sauvegarde (.save)", "save"));
                 jfc.showOpenDialog(null);
 
