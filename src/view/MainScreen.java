@@ -113,7 +113,7 @@ public class MainScreen extends JFrame {
         timer = new TimeCounter(t);
         timer.stop();
         timer.setFont(new Font("Impact", 0, 20));
-        jpTimer.add(new JLabel("<html><div style=\"padding-left:15px;color:#222222;margin-top:25px;\">temps restant :</div></html>"));
+        jpTimer.add(new JLabel("<html><div style=\"padding-left:15px;color:#222222;margin-top:25px;\">Temps restant :</div></html>"));
         jpTimer.add(timer);
 
 // ------------------- Au cas ou on veut afficher quelque chose sous le timer : -------------------------
@@ -142,7 +142,7 @@ public class MainScreen extends JFrame {
         labPoints.setForeground(new Color(50, 50, 50));
         labPoints.setSize(new Dimension(5000, 550));
         labPoints.setHorizontalTextPosition(JLabel.CENTER);
-        jpScore.add(new JLabel("<html><div style=\"padding-left:35px;color:#222222;margin-top:10px;\">score :</div></html>"));
+        jpScore.add(new JLabel("<html><div style=\"padding-left:35px;color:#222222;margin-top:10px;\">Score :</div></html>"));
         jpScore.add(labPoints);
         // Logo
         JLabel logo = new JLabel(new ImageIcon("./src/images/logopetit.png"));
