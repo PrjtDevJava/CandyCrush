@@ -37,12 +37,9 @@ public class MainScreen extends JFrame {
     private final JMenuItem itemNwGame;
     private final JMenuItem itemSaveGame;
     private final JMenuItem itemLoadGame;
-    private final JPanel jpTimer;
-    private JMenuItem itemNwGame;
-    private JMenuItem itemSaveGame;
-    private JMenuItem itemLoadGame;
     private JMenu menuOptions;
     private JMenu menuHelp;
+    private final JPanel jpTimer;
 
     public MainScreen(int x, int y) throws IOException {
         this.setTitle("Candy Crush Stone");
