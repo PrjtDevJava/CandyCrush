@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.Serializable;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JLabel;

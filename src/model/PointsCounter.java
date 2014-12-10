@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Observable;
 
-public class PointsCounter extends Observable {
+public class PointsCounter extends Observable implements Serializable {
 
     private int points;
 

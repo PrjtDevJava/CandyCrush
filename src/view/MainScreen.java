@@ -32,9 +32,9 @@ public class MainScreen extends JFrame {
     private final String POLICE = "Thomas";
     private final JPanel gridPane;
     private final JLabel labPoints;
-    private final JMenuItem itemNwGame;
-    private final JMenuItem itemSaveGame;
-    private final JMenuItem itemLoadGame;
+    private JMenuItem itemNwGame;
+    private JMenuItem itemSaveGame;
+    private JMenuItem itemLoadGame;
 
     public MainScreen(int x, int y) throws IOException {
         this.setTitle("Candy Crush Stone");
@@ -180,9 +180,25 @@ public class MainScreen extends JFrame {
 
     public void addMenuListener(ActionListener ae) {
         itemNwGame.addActionListener(ae);
+        itemLoadGame.addActionListener(ae);
+        itemSaveGame.addActionListener(ae);
     }
 
     public JLabel getLabPoints() {
         return this.labPoints;
     }
+
+    public JMenuItem getItemNwGame() {
+        return itemNwGame;
+    }
+
+    public JMenuItem getItemSaveGame() {
+        return itemSaveGame;
+    }
+
+    public JMenuItem getItemLoadGame() {
+        return itemLoadGame;
+    }
+    
+    
 }
