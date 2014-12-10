@@ -9,17 +9,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileFilter;
+import javax.swing.JOptionPane;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import model.Grid;
 import model.PointsCounter;
 import view.MainScreen;
 
-public class MenuController implements ActionListener {
+public class MenuController implements ActionListener, MenuListener {
 
     private Grid grid;
     private PointsCounter point;
@@ -34,6 +35,7 @@ public class MenuController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
+        System.out.println(ae.getSource().toString());
         if (ae.getSource() == this.mainscreen.getItemNwGame()) {
             this.grid.changeGrid();
             this.point.setPoints(0);
@@ -81,5 +83,20 @@ public class MenuController implements ActionListener {
             }
         }
 
+    }
+    
+    @Override
+    public void menuSelected(MenuEvent me) {
+        if (me.getSource() == this.mainscreen.getMenuHelp()) {
+//            JOptionPane.showInputDialog(mainscreen, "What is your name?", null);
+        }
+    }
+
+    @Override
+    public void menuDeselected(MenuEvent me) {
+    }
+
+    @Override
+    public void menuCanceled(MenuEvent me) {
     }
 }
