@@ -13,7 +13,7 @@ import model.utils.TimeMS;
 
 public class TimeCounter extends JPanel implements Serializable {
 
-    private static Font f = new Font("Impact", 0, 20);
+    private static Font f = new Font(null, 0, 18);
     private Timer timer;
     private TimeMS timeRest;
     private int time;
@@ -28,10 +28,11 @@ public class TimeCounter extends JPanel implements Serializable {
         if (N != 0) {
             timer.start();
         }
-        setOpaque(false);
-        setPreferredSize(new Dimension(72, 72));
+        this.setOpaque(false);
+        this.setPreferredSize(new Dimension(72, 72));
         this.timeRest = new TimeMS(N);
         this.setTime(N);
+        this.setLocation(50, 50);
     }
 
     public void start() {
@@ -56,7 +57,7 @@ public class TimeCounter extends JPanel implements Serializable {
      * @param r : rayon du cercle
      */
     public void drawCircle(Graphics cg, int xCenter, int yCenter, int r) {
-        cg.setColor(Color.white);
+        cg.setColor(CasePane.BACKGROUND_COLOR);
         cg.fillOval(xCenter - r, yCenter - r, 2 * r, 2 * r);
         if (timeRest.timeToSec() < (time / 4)) {
             cg.setColor(Color.RED);
@@ -67,7 +68,7 @@ public class TimeCounter extends JPanel implements Serializable {
         }
 
         cg.fillArc(xCenter - r, yCenter - r, 2 * r, 2 * r, 90, -(360 - timeRest.timeToSec() * 360 / time));
-        cg.setColor(Color.black);
+        cg.setColor(new Color(50, 50, 50));
         cg.setFont(f);
 
         cg.drawString(this.timeRest.toString(), 24, 42);

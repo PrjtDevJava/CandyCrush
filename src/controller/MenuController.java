@@ -37,7 +37,7 @@ public class MenuController implements ActionListener, MenuListener {
     public void actionPerformed(ActionEvent ae) {
         this.mainscreen.timer.stop();
         if (ae.getSource() == this.mainscreen.getItemNwGame()) {
-            this.mainscreen.timer.setTime(mainscreen.timer.getTime());
+            this.mainscreen.timer.setTime(30);
             this.grid.changeGrid();
             this.point.setPoints(0);
 
