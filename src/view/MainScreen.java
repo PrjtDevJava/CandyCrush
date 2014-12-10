@@ -30,7 +30,7 @@ public class MainScreen extends JFrame {
     private int WIN_W;
     private int GRID_H;
     private int GRID_W;
-    public TimeCounter timer;
+    public static TimeCounter timer;
     public static Color BACKGROUND_COLOR = CasePane.HOVER_COLOR;
     private final String POLICE = "Thomas";
     private final JPanel gridPane;
@@ -40,6 +40,7 @@ public class MainScreen extends JFrame {
     private final JMenuItem itemLoadGame;
     private JMenu menuOptions;
     private JMenu menuHelp;
+    private JMenu menuGame;
     private final JPanel jpTimer;
     private OptionScreen optScreen;
 
@@ -60,7 +61,7 @@ public class MainScreen extends JFrame {
         ////////////////////////////////////////////////////
         JMenuBar menuBar = new JMenuBar();
 
-        JMenu menuGame = new JMenu("Partie");
+        this.menuGame = new JMenu("Partie");
         this.itemNwGame = new JMenuItem("Nouvelle partie", KeyEvent.VK_N);
         this.itemSaveGame = new JMenuItem("Sauvgarder partie", KeyEvent.VK_S);
         this.itemLoadGame = new JMenuItem("Charger partie", KeyEvent.VK_O);
@@ -109,7 +110,8 @@ public class MainScreen extends JFrame {
         // Timer
         jpTimer = new JPanel();
         jpTimer.setLayout(new BoxLayout(jpTimer, BoxLayout.Y_AXIS));
-        timer = new TimeCounter(0);
+        timer = new TimeCounter(30);
+        timer.stop();
         timer.setFont(new Font("Impact", 0, 20));
         jpTimer.add(new JLabel("<html><div style=\"padding-left:15px;color:#222222;margin-top:25px;\">temps restant :</div></html>"));
         jpTimer.add(timer);
@@ -174,8 +176,6 @@ public class MainScreen extends JFrame {
 
     public void addGridListener(MouseListener ml, Grid grid) {
         this.gridPane.setLayout(new GridLayout(grid.getHeight(), grid.getWidth()));
-        timer.setTime(30);
-        timer.start();
         for (int i = 0; i < grid.getHeight(); i++) {
             for (int j = 0; j < grid.getWidth(); j++) {
                 CasePane cp = new CasePane();
@@ -214,6 +214,13 @@ public class MainScreen extends JFrame {
             }
         });
     }
+
+    public void addMenuListener(MenuListener ml) {
+        this.menuHelp.addMenuListener(ml);
+        this.menuGame.addMenuListener(ml);
+        this.menuOptions.addMenuListener(ml);
+    }
+
     
     
     public JLabel getLabPoints() {
