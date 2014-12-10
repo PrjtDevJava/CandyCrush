@@ -20,6 +20,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import model.Grid;
 
@@ -189,6 +190,21 @@ public class MainScreen extends JFrame {
         this.itemNwGame.addActionListener(ae);
         this.itemLoadGame.addActionListener(ae);
         this.itemSaveGame.addActionListener(ae);
+        this.menuOptions.addMenuListener(new MenuListener() {
+            @Override
+            public void menuSelected(MenuEvent me) {
+                OptionScreen optS = new OptionScreen();
+                optS.setVisible(true);
+            }
+
+            @Override
+            public void menuDeselected(MenuEvent me) {
+            }
+
+            @Override
+            public void menuCanceled(MenuEvent me) {
+            }
+        });
     }
 
     public void addMenuListener(MenuListener ml) {
