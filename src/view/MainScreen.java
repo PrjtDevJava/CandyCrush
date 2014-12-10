@@ -20,6 +20,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.swing.event.MenuListener;
 import model.Grid;
 
 public class MainScreen extends JFrame {
@@ -36,6 +37,8 @@ public class MainScreen extends JFrame {
     private final JMenuItem itemNwGame;
     private final JMenuItem itemSaveGame;
     private final JMenuItem itemLoadGame;
+    private JMenu menuOptions;
+    private JMenu menuHelp;
     private final JPanel jpTimer;
 
     public MainScreen(int x, int y) throws IOException {
@@ -56,18 +59,18 @@ public class MainScreen extends JFrame {
         JMenuBar menuBar = new JMenuBar();
 
         JMenu menuGame = new JMenu("Partie");
-        itemNwGame = new JMenuItem("Nouvelle partie", KeyEvent.VK_N);
-        itemSaveGame = new JMenuItem("Sauvgarder partie", KeyEvent.VK_S);
-        itemLoadGame = new JMenuItem("Charger partie", KeyEvent.VK_O);
-        itemNwGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
-        itemSaveGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
-        itemLoadGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
+        this.itemNwGame = new JMenuItem("Nouvelle partie", KeyEvent.VK_N);
+        this.itemSaveGame = new JMenuItem("Sauvgarder partie", KeyEvent.VK_S);
+        this.itemLoadGame = new JMenuItem("Charger partie", KeyEvent.VK_O);
+        this.itemNwGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+        this.itemSaveGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
+        this.itemLoadGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
         menuGame.add(itemNwGame);
         menuGame.add(itemSaveGame);
         menuGame.add(itemLoadGame);
 
-        JMenu menuOptions = new JMenu("Options");
-        JMenu menuHelp = new JMenu("?");
+        this.menuOptions = new JMenu("Options");
+        this.menuHelp = new JMenu("?");
 //        ActionListener actionMenu = new ActionListener() {
 //
 //            @Override
@@ -182,11 +185,38 @@ public class MainScreen extends JFrame {
         }
     }
 
-    public void addMenuListener(ActionListener ae) {
-        itemNwGame.addActionListener(ae);
+    public void addItemMenuListener(ActionListener ae) {
+        this.itemNwGame.addActionListener(ae);
+        this.itemLoadGame.addActionListener(ae);
+        this.itemSaveGame.addActionListener(ae);
+    }
+
+    public void addMenuListener(MenuListener ml) {
+        this.menuHelp.addMenuListener(ml);
     }
 
     public JLabel getLabPoints() {
         return this.labPoints;
     }
+
+    public JMenuItem getItemNwGame() {
+        return itemNwGame;
+    }
+
+    public JMenuItem getItemSaveGame() {
+        return itemSaveGame;
+    }
+
+    public JMenuItem getItemLoadGame() {
+        return itemLoadGame;
+    }
+
+    public JMenu getMenuOptions() {
+        return menuOptions;
+    }
+
+    public JMenu getMenuHelp() {
+        return menuHelp;
+    }
+
 }

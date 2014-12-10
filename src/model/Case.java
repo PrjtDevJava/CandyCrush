@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Observable;
 
-public class Case extends Observable {
+public class Case extends Observable implements Serializable {
 
     public static final int NB_CASE_POINT = 3; // Nombre de cases pour avoir au moins un point
     private Shape shape;

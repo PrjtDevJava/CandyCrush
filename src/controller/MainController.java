@@ -12,7 +12,8 @@ public class MainController {
         g.initGrid();
         MScreen.addGridListener(new GridController(g), g);
         PointsController pc = new PointsController(MScreen.getLabPoints());
-        MScreen.addMenuListener(new MenuController(g, pc));
+        MScreen.addItemMenuListener(new MenuController(g, pc.pointCounter, MScreen));
+        MScreen.addMenuListener(new MenuController(g, pc.pointCounter, MScreen));
         MScreen.setVisible(true);
     }
 

@@ -1,7 +1,9 @@
 package model;
 
-public class Grid {
-    
+import java.io.Serializable;
+
+public class Grid implements Serializable {
+
     private Case matrix[][];
     private final int x;  // Largeur
     private final int y;  // Hauteur
@@ -13,7 +15,7 @@ public class Grid {
         this.y = y;
         this.nbShape = nbShape;
     }
-    
+
     public void initGrid() {
         boolean ok;
         for (int j = 0; j < this.y; j++) {
@@ -48,7 +50,15 @@ public class Grid {
                 } while (!ok);
             }
         }
-        
+
+    }
+
+    public void changeGrid(Grid g) {
+        for (int j = 0; j < this.y; j++) {
+            for (int i = 0; i < this.x; i++) {
+                this.matrix[j][i].regenerate(g.getCase(i, j));
+            }
+        }
     }
 
     public Case getCase(int x, int y) {
@@ -57,23 +67,23 @@ public class Grid {
         }
         return null;
     }
-    
+
     public Case[][] getMatrix() {
         return matrix;
     }
-    
+
     public int getWidth() {
         return x;
     }
-    
+
     public int getHeight() {
         return y;
     }
-    
+
     public int getNbShape() {
         return nbShape;
     }
-    
+
     @Override
     public String toString() {
         String str = "";
