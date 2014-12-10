@@ -96,13 +96,13 @@ public class MainScreen extends JFrame {
         JPanel menuPane = new JPanel();
         menuPane.setPreferredSize(new Dimension(150, GRID_H));
 
-        JLabel labTime = new JLabel("2:30");
+        JLabel labTime = new JLabel();
         labTime.setFont(new Font(POLICE, 0, 18));
 
         // Timer
         JPanel jpTimer = new JPanel();
         jpTimer.setLayout(new BoxLayout(jpTimer, BoxLayout.Y_AXIS));
-        TimeCounter tc = new TimeCounter(99);
+        TimeCounter tc = new TimeCounter(15);
         tc.setFont(new Font("Impact", 0, 20));
         jpTimer.add(new JLabel("<html><div style=\"padding-left:15px;color:#222222;margin-top:50px;\">temps restant :</div></html>"));
         jpTimer.add(tc);
