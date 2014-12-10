@@ -41,6 +41,7 @@ public class MainScreen extends JFrame {
     private JMenu menuOptions;
     private JMenu menuHelp;
     private final JPanel jpTimer;
+    private OptionScreen optScreen;
 
     public MainScreen(int x, int y) throws IOException {
         this.setTitle("Candy Crush Stone");
@@ -110,7 +111,7 @@ public class MainScreen extends JFrame {
         jpTimer.setLayout(new BoxLayout(jpTimer, BoxLayout.Y_AXIS));
         timer = new TimeCounter(0);
         timer.setFont(new Font("Impact", 0, 20));
-        jpTimer.add(new JLabel("<html><div style=\"padding-left:15px;color:#222222;margin-top:50px;\">temps restant :</div></html>"));
+        jpTimer.add(new JLabel("<html><div style=\"padding-left:15px;color:#222222;margin-top:25px;\">temps restant :</div></html>"));
         jpTimer.add(timer);
 
 // ------------------- Au cas ou on veut afficher quelque chose sous le timer : -------------------------
@@ -190,11 +191,18 @@ public class MainScreen extends JFrame {
         this.itemNwGame.addActionListener(ae);
         this.itemLoadGame.addActionListener(ae);
         this.itemSaveGame.addActionListener(ae);
+    }
+
+    public void addMenuListener(MenuListener ml) {
+        this.menuHelp.addMenuListener(ml);
+    }
+
+    public void addOptionScreen(OptionScreen Oscreen){
+        this.optScreen = Oscreen;
         this.menuOptions.addMenuListener(new MenuListener() {
             @Override
             public void menuSelected(MenuEvent me) {
-                OptionScreen optS = new OptionScreen();
-                optS.setVisible(true);
+                MainScreen.this.optScreen.setVisible(true);
             }
 
             @Override
@@ -206,11 +214,8 @@ public class MainScreen extends JFrame {
             }
         });
     }
-
-    public void addMenuListener(MenuListener ml) {
-        this.menuHelp.addMenuListener(ml);
-    }
-
+    
+    
     public JLabel getLabPoints() {
         return this.labPoints;
     }
