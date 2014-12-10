@@ -10,7 +10,7 @@ public class MainController {
 
     public MainController() throws IOException {
         Grid g = new Grid(Params.casesX, Params.casesY, Params.nbShape);
-        MainScreen MScreen = new MainScreen(Params.casesX, Params.casesY);
+        MainScreen MScreen = new MainScreen(Params.casesX, Params.casesY, Params.time);
         g.initGrid();
         MScreen.addGridListener(new GridController(g), g);
         PointsController pc = new PointsController(MScreen.getLabPoints());

@@ -37,7 +37,7 @@ public class UpdateGravity extends java.lang.Thread {
 //                }
                 //System.out.println("x: " + curCase.getX() + " y: " + curCase.getY());
                 new UpdateAgregation(curCase).start();
-                System.out.println("x: " + curCase.getX() + " y: " + curCase.getY());
+//                System.out.println("x: " + curCase.getX() + " y: " + curCase.getY());
             }
             setCaseToUpdAgreg.clear();
             
