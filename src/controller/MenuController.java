@@ -36,9 +36,9 @@ public class MenuController implements ActionListener, MenuListener {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        this.mainscreen.timer.stop();
+        MainScreen.timer.stop();
         if (ae.getSource() == this.mainscreen.getItemNwGame()) {
-            this.mainscreen.timer.setTime(30);
+            MainScreen.timer.setTime(30);
             this.grid.changeGrid();
             this.point.setPoints(0);
 
@@ -53,12 +53,12 @@ public class MenuController implements ActionListener, MenuListener {
 
                 // Sérialisation
                 fos = new FileOutputStream(jfc.getSelectedFile() + ".save");
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                oos.writeObject(grid);
-                oos.writeObject(point);
-                oos.writeObject(mainscreen.timer);
-                oos.flush();
-                oos.close();
+                try (ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+                    oos.writeObject(grid);
+                    oos.writeObject(point);
+                    oos.writeObject(MainScreen.timer);
+                    oos.flush();
+                }
                 fos.close();
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
@@ -79,19 +79,21 @@ public class MenuController implements ActionListener, MenuListener {
                 ObjectInputStream ois = new ObjectInputStream(fis);
                 this.grid.changeGrid((Grid) ois.readObject());
                 this.point.setPoints(((PointsCounter) ois.readObject()).getPoints());
-                this.mainscreen.timer.setTime(((TimeCounter) ois.readObject()).getTimeRest());
+                TimeCounter tc = (TimeCounter) ois.readObject();
+                MainScreen.timer.setTime(tc.getTime());
+                MainScreen.timer.setTimeRest(tc.getTimeRest());
                 ois.close();
                 fis.close();
             } catch (IOException | ClassNotFoundException ex) {
                 Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        this.mainscreen.timer.start();
 
     }
 
     @Override
     public void menuSelected(MenuEvent me) {
+        MainScreen.timer.stop();
         if (me.getSource() == this.mainscreen.getMenuHelp()) {
             HelpScreen hs = new HelpScreen();
         }
@@ -99,6 +101,7 @@ public class MenuController implements ActionListener, MenuListener {
 
     @Override
     public void menuDeselected(MenuEvent me) {
+        MainScreen.timer.start();
     }
 
     @Override

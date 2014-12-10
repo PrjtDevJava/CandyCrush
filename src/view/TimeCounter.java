@@ -96,6 +96,11 @@ public class TimeCounter extends JPanel implements Serializable {
         this.timeRest.setTime(time);
     }
 
+    
+    public void setTimeRest(int timeRest) {
+        this.timeRest.setTime(timeRest);    
+    }
+    
     private Timer createTimer() {
         ActionListener action = new ActionListener() {
             @Override
