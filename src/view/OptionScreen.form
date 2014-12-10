@@ -200,7 +200,7 @@
         <Component class="javax.swing.JSlider" name="sliderShape">
           <Properties>
             <Property name="maximum" type="int" value="8"/>
-            <Property name="minimum" type="int" value="2"/>
+            <Property name="minimum" type="int" value="3"/>
             <Property name="value" type="int" value="4"/>
           </Properties>
         </Component>

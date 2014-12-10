@@ -19,8 +19,8 @@ import java.util.logging.Logger;
  * @author Sylvio
  */
 public class Params implements Serializable{
-    public static int casesX = 4;
-    public static int casesY = 4;
+    public static int casesX = 8;
+    public static int casesY = 8;
     public static int nbShape = 4;
     
     

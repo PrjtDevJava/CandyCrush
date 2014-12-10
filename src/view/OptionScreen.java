@@ -122,7 +122,7 @@ public class OptionScreen extends javax.swing.JFrame {
         labCaseH.setText("8");
 
         sliderShape.setMaximum(8);
-        sliderShape.setMinimum(2);
+        sliderShape.setMinimum(3);
         sliderShape.setValue(4);
 
         jLabel3.setText("Nombre de formes différentes");

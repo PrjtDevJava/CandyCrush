@@ -193,9 +193,6 @@ public class MainScreen extends JFrame {
         this.itemSaveGame.addActionListener(ae);
     }
 
-    public void addMenuListener(MenuListener ml) {
-        this.menuHelp.addMenuListener(ml);
-    }
 
     public void addOptionScreen(OptionScreen Oscreen){
         this.optScreen = Oscreen;

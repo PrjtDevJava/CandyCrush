@@ -101,7 +101,6 @@ public class MenuController implements ActionListener, MenuListener {
 
     @Override
     public void menuDeselected(MenuEvent me) {
-        MainScreen.timer.start();
     }
 
     @Override
