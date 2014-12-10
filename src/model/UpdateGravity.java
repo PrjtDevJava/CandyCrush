@@ -28,7 +28,7 @@ public class UpdateGravity extends java.lang.Thread {
     public static synchronized void decrementThread() {
         nbThread--;
         if (nbThread == 0) {
-            System.out.println("----");
+//            System.out.println("----");
             for (Case curCase : setCaseToUpdAgreg) {
 //                try {
 //                    Thread.sleep(10);
