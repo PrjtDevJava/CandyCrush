@@ -44,7 +44,7 @@ public class MainScreen extends JFrame {
     private final JPanel jpTimer;
     private OptionScreen optScreen;
 
-    public MainScreen(int x, int y) throws IOException {
+    public MainScreen(int x, int y, int t) throws IOException {
         this.setTitle("Candy Crush Stone");
         this.GRID_H = 60 * y;
         this.GRID_W = 60 * x;
@@ -110,10 +110,10 @@ public class MainScreen extends JFrame {
         // Timer
         jpTimer = new JPanel();
         jpTimer.setLayout(new BoxLayout(jpTimer, BoxLayout.Y_AXIS));
-        timer = new TimeCounter(30);
+        timer = new TimeCounter(t);
         timer.stop();
         timer.setFont(new Font("Impact", 0, 20));
-        jpTimer.add(new JLabel("<html><div style=\"padding-left:15px;color:#222222;margin-top:25px;\">temps restant :</div></html>"));
+        jpTimer.add(new JLabel("<html><div style=\"padding-left:15px;color:#222222;margin-top:25px;\">Temps restant :</div></html>"));
         jpTimer.add(timer);
 
 // ------------------- Au cas ou on veut afficher quelque chose sous le timer : -------------------------
@@ -142,7 +142,7 @@ public class MainScreen extends JFrame {
         labPoints.setForeground(new Color(50, 50, 50));
         labPoints.setSize(new Dimension(5000, 550));
         labPoints.setHorizontalTextPosition(JLabel.CENTER);
-        jpScore.add(new JLabel("<html><div style=\"padding-left:35px;color:#222222;margin-top:10px;\">score :</div></html>"));
+        jpScore.add(new JLabel("<html><div style=\"padding-left:35px;color:#222222;margin-top:10px;\">Score :</div></html>"));
         jpScore.add(labPoints);
         // Logo
         JLabel logo = new JLabel(new ImageIcon("./src/images/logopetit.png"));

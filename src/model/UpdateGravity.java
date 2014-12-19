@@ -28,7 +28,7 @@ public class UpdateGravity extends java.lang.Thread {
     public static synchronized void decrementThread() {
         nbThread--;
         if (nbThread == 0) {
-            System.out.println("----");
+//            System.out.println("----");
             for (Case curCase : setCaseToUpdAgreg) {
 //                try {
 //                    Thread.sleep(10);
@@ -37,7 +37,7 @@ public class UpdateGravity extends java.lang.Thread {
 //                }
                 //System.out.println("x: " + curCase.getX() + " y: " + curCase.getY());
                 new UpdateAgregation(curCase).start();
-                System.out.println("x: " + curCase.getX() + " y: " + curCase.getY());
+//                System.out.println("x: " + curCase.getX() + " y: " + curCase.getY());
             }
             setCaseToUpdAgreg.clear();
             
@@ -54,41 +54,9 @@ public class UpdateGravity extends java.lang.Thread {
         //System.out.println("Nb thread : " + Thread.activeCount());
     }
     
-    @SuppressWarnings("empty-statement")
-    private void gravityLowPerf(){
-        synchronized (grid) { // Pas très optimisé, on pourrait faire la synchronisation par colonne
-
-            int numStartC; // La case de départ (dès qu'on trouve un case non vide en dessous de la case c)
-            for (numStartC = grid.getHeight() - 1; numStartC > 0 && grid.getCase(column, numStartC).getType() != Type.EMPTY; numStartC--);
-            if(numStartC+1 != grid.getHeight()){
-                setCaseToUpdAgreg.add(grid.getCase(column, numStartC+1));
-            }
-            
-            Case startC = grid.getCase(column, numStartC);
-
-            for (int i = numStartC; i >= 0; i--) {
-                Case tmpCase = grid.getCase(column, i);
-                setCaseToUpdAgreg.add(tmpCase); // Ajoute dans la liste pour vérifier la gravité
-                if (tmpCase.getType() != Type.EMPTY) {
-                    startC.regenerate(tmpCase);
-                    tmpCase.setShape(null);
-                    tmpCase.changeType(Type.EMPTY);
-
-                    if (numStartC > 0) {
-                        numStartC--;
-                        startC = grid.getCase(column, numStartC);
-                    }
-                }
-            }
-            // Régénère des nouvelles couleurs aléatoires pour les cases vides de la colonne
-            for (int i = numStartC; i >= 0; i--) {
-                Case tmpCase = grid.getCase(column, i);
-                tmpCase.regenerate(Type.NORMAL);
-                //setCaseToUpdAgreg.add(tmpCase);
-            }
-        }
-    }
-    
+    /**
+     * Permet de gérer la gravité, en faisant tomber petit à petit les cases
+     */
     @SuppressWarnings("empty-statement")
     private void gravityHightPerf(){
         //synchronized (grid) { // Pas très optimisé, on pourrait faire la synchronisation par colonne
@@ -129,13 +97,47 @@ public class UpdateGravity extends java.lang.Thread {
                 
             }while(i >= 0);
             
-            // Régénère des nouvelles couleurs aléatoires pour les cases vides de la colonne
-//            for (int i = numStartC; i >= 0; i--) {
-//                Case tmpCase = grid.getCase(column, i);
-//                tmpCase.regenerate(Type.NORMAL);
-//                //setCaseToUpdAgreg.add(tmpCase);
-//            }
-        //}
     }
+    
+    /**
+     * Gère la gravité en basse performance, c'est à dire que les cases tombent directement.
+     * Les cases arrivent tout de suite en base et ne prennent pas le temps de tomber réelement.
+     */
+    @SuppressWarnings("empty-statement")
+    private void gravityLowPerf(){
+        synchronized (grid) { // Pas très optimisé, on pourrait faire la synchronisation par colonne
+
+            int numStartC; // La case de départ (dès qu'on trouve un case non vide en dessous de la case c)
+            for (numStartC = grid.getHeight() - 1; numStartC > 0 && grid.getCase(column, numStartC).getType() != Type.EMPTY; numStartC--);
+            if(numStartC+1 != grid.getHeight()){
+                setCaseToUpdAgreg.add(grid.getCase(column, numStartC+1));
+            }
+            
+            Case startC = grid.getCase(column, numStartC);
+
+            for (int i = numStartC; i >= 0; i--) {
+                Case tmpCase = grid.getCase(column, i);
+                setCaseToUpdAgreg.add(tmpCase); // Ajoute dans la liste pour vérifier la gravité
+                if (tmpCase.getType() != Type.EMPTY) {
+                    startC.regenerate(tmpCase);
+                    tmpCase.setShape(null);
+                    tmpCase.changeType(Type.EMPTY);
+
+                    if (numStartC > 0) {
+                        numStartC--;
+                        startC = grid.getCase(column, numStartC);
+                    }
+                }
+            }
+            // Régénère des nouvelles couleurs aléatoires pour les cases vides de la colonne
+            for (int i = numStartC; i >= 0; i--) {
+                Case tmpCase = grid.getCase(column, i);
+                tmpCase.regenerate(Type.NORMAL);
+                //setCaseToUpdAgreg.add(tmpCase);
+            }
+        }
+    }
+    
+    
 
 }

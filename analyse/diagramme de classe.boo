@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?PowerDesigner AppLocale="UTF16" ID="{6A5C2E67-FEEF-42D2-A17E-D9BC53D46D81}" Label="" LastModificationDate="1416998293" Name="ModeleOrienteObjet_1" Objects="31" Symbols="29" Target="Analyse" TargetLink="Reference" Type="{18112060-1A4B-11D1-83D9-444553540000}" signature="CLD_OBJECT_MODEL" version="15.1.0.2850"?>
+<?PowerDesigner AppLocale="UTF16" ID="{6A5C2E67-FEEF-42D2-A17E-D9BC53D46D81}" Label="" LastModificationDate="1416998293" Name="ModeleOrienteObjet_1" Objects="40" Symbols="32" Target="Analyse" TargetLink="Reference" Type="{18112060-1A4B-11D1-83D9-444553540000}" signature="CLD_OBJECT_MODEL" version="15.1.0.2850"?>
 <!-- Veuillez ne pas modifier ce fichier -->
 
 <Model xmlns:a="attribute" xmlns:c="collection" xmlns:o="object">
@@ -1539,7 +1539,7 @@ Shadow=0</a:DisplayPreferences>
 <o:AssociationSymbol Id="o29">
 <a:CreationDate>1416996482</a:CreationDate>
 <a:ModificationDate>1416998284</a:ModificationDate>
-<a:Rect>((19831,-9600), (30475,-3625))</a:Rect>
+<a:Rect>((19831,-9600), (30400,-3625))</a:Rect>
 <a:ListOfPoints>((30400,-9600),(30400,-4800),(19831,-4800))</a:ListOfPoints>
 <a:CornerStyle>2</a:CornerStyle>
 <a:ArrowStyle>8</a:ArrowStyle>
@@ -1559,7 +1559,7 @@ Shadow=0</a:DisplayPreferences>
 <o:AssociationSymbol Id="o32">
 <a:CreationDate>1416996486</a:CreationDate>
 <a:ModificationDate>1416998284</a:ModificationDate>
-<a:Rect>((20000,-2400), (31500,2515))</a:Rect>
+<a:Rect>((20000,-2400), (31575,2515))</a:Rect>
 <a:ListOfPoints>((30451,2515),(30451,-2400),(20000,-2400))</a:ListOfPoints>
 <a:CornerStyle>2</a:CornerStyle>
 <a:ArrowStyle>8</a:ArrowStyle>
@@ -1619,7 +1619,7 @@ Shadow=0</a:DisplayPreferences>
 <o:AssociationSymbol Id="o39">
 <a:CreationDate>1416996499</a:CreationDate>
 <a:ModificationDate>1416997349</a:ModificationDate>
-<a:Rect>((-12257,6237), (-10159,16634))</a:Rect>
+<a:Rect>((-12332,6237), (-10084,16634))</a:Rect>
 <a:ListOfPoints>((-11208,6237),(-11208,16634))</a:ListOfPoints>
 <a:CornerStyle>2</a:CornerStyle>
 <a:ArrowStyle>8</a:ArrowStyle>
@@ -1659,7 +1659,7 @@ Shadow=0</a:DisplayPreferences>
 <o:AssociationSymbol Id="o45">
 <a:CreationDate>1416997833</a:CreationDate>
 <a:ModificationDate>1416998018</a:ModificationDate>
-<a:Rect>((19026,-11050), (21050,-4800))</a:Rect>
+<a:Rect>((18951,-11050), (21125,-4800))</a:Rect>
 <a:ListOfPoints>((20075,-4800),(20075,-11050))</a:ListOfPoints>
 <a:CornerStyle>2</a:CornerStyle>
 <a:ArrowStyle>8</a:ArrowStyle>
